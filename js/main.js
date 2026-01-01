@@ -25,33 +25,30 @@ if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-
 /* ======================
    BOTÕES LOGIN / REGISTRO
 ====================== */
-const btnLogin = document.getElementById("btn-login");
-const btnRegistro = document.getElementById("btn-registro");
-const perfilSection = document.getElementById("perfil");
-const jogosSection = document.getElementById("jogos");
-const loginAlert = document.getElementById("login-alert");
-const loginSection = document.getElementById("login");
+const loginSection = document.getElementById("login"); // nova seção de login
 
-// Mostrar seção de login/registro
+// Mostrar seção de login
 if (btnLogin) {
   btnLogin.addEventListener("click", () => {
     window.location.hash = "#login";
-    loginSection.classList.remove("hidden");
+    loginSection.classList.remove("hidden");  // mostrar login
     perfilSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
 }
 
+// Mostrar seção de registro
 if (btnRegistro) {
   btnRegistro.addEventListener("click", () => {
     window.location.hash = "#perfil";
-    perfilSection.classList.remove("hidden");
+    perfilSection.classList.remove("hidden");  // mostrar registro/perfil
     loginSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
 }
+
 
 /* ======================
    REGISTO
