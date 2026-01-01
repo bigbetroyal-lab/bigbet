@@ -185,3 +185,26 @@ if (logoutBtn) {
   });
 }
 
+/* ======================
+   SALDO - ATUALIZAÇÃO
+====================== */
+
+async function atualizarSaldo(valor) {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  let saldo = snap.data().saldo + valor;
+  if (saldo < 0) saldo = 0;
+
+  await updateDoc(ref, { saldo });
+
+  // Atualizar UI
+  window.saldoAtual = saldo;
+  document.getElementById("saldo").textContent = saldo.toFixed(2);
+}
+
+
