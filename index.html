@@ -7,9 +7,10 @@
 </head>
 <body>
 
+<!-- ===== CABEÇALHO ===== -->
 <header class="topbar">
     <div class="top-left">
-        <img src="assets/logo.png" class="logo-img" alt="Logo BigBetRoyal">
+        <img src="/assets/logo.png" class="logo-img" alt="Logo BigBetRoyal">
         <span class="logo-text">BigBetRoyal</span>
     </div>
 
@@ -28,60 +29,77 @@
     </div>
 </header>
 
+<!-- ===== LAYOUT PRINCIPAL ===== -->
 <div class="layout">
+
+    <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
-    <div class="sidebar-logo">
-        <img src="assets/logo.png" alt="Logo" class="sidebar-logo-img">
-        <span class="sidebar-logo-text">BigBetRoyal</span>
-    </div>
+        <div class="sidebar-logo">
+            <img src="/assets/logo.png" alt="Logo" class="sidebar-logo-img">
+            <span class="sidebar-logo-text">BigBetRoyal</span>
+        </div>
 
-    <nav class="sidebar-menu">
-        <button data-page="home">🏠 Home</button>
-        <button data-page="slot">🎰 Slots</button>
-        <button data-page="roleta">🎡 Roleta</button>
-        <button data-page="crash">📈 Crash</button>
-        <button data-page="ranking">🏆 Ranking</button>
-        <button data-page="promo">🎁 Promoções</button>
-        <button data-page="vip">💎 VIP</button>
-    </nav>
+        <nav class="sidebar-menu">
+            <button data-page="home">🏠 Home</button>
+            <button data-page="slot">🎰 Slots</button>
+            <button data-page="roleta">🎡 Roleta</button>
+            <button data-page="crash">📈 Crash</button>
+            <button data-page="ranking">🏆 Ranking</button>
+            <button data-page="promo">🎁 Promoções</button>
+            <button data-page="vip">💎 VIP</button>
+        </nav>
 
-    <div class="sidebar-balance">
-        💰 Saldo: <span id="sidebar-saldo">1000</span> COINS
-    </div>
-</aside>
+        <div class="sidebar-balance">
+            💰 Saldo: <span id="sidebar-saldo">1000</span> COINS
+        </div>
+    </aside>
 
-
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="content">
 
+        <!-- HOME -->
         <section id="home" class="page active">
             <h2>🔥 Jogos Populares</h2>
-
             <div class="games-grid">
                 <div class="game-card" data-page="slot">
-                    <img src="assets/games/slot1.jpg" alt="Slot Royal 777">
+                    <img src="/assets/games/slot1.jpg" alt="Slot Royal 777">
                     <span>Slot Royal 777</span>
+                </div>
+                <div class="game-card" data-page="slot">
+                    <img src="/assets/games/slot2.jpg" alt="Mega Win Slots">
+                    <span>Mega Win Slots</span>
+                </div>
+                <div class="game-card" data-page="roleta">
+                    <img src="/assets/games/roleta.jpg" alt="Roleta">
+                    <span>Roleta Royal</span>
                 </div>
             </div>
         </section>
 
+        <!-- SLOT -->
         <section id="slot" class="page">
             <h2>🎰 Slot Royal 777</h2>
             <div id="slot-container"></div>
         </section>
 
+        <!-- ROLETA -->
         <section id="roleta" class="page">
             <h2>🎡 Roleta</h2>
             <p>Em desenvolvimento</p>
         </section>
 
+        <!-- CRASH -->
         <section id="crash" class="page">
             <h2>📈 Crash</h2>
             <p>Em desenvolvimento</p>
         </section>
 
     </main>
+
 </div>
 
-<script src="js/app.js"></script>
+<!-- ===== JS ===== -->
+<script src="/js/app.js"></script>
+
 </body>
 </html>
