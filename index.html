@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BigBet Casino</title>
-
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
@@ -36,19 +35,12 @@
 </header>
 
 <!-- MENU LATERAL -->
-<aside id="sidebar"
-  class="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 shadow-lg
-         transform -translate-x-64 md:translate-x-0 transition-transform z-30">
-
+<aside id="sidebar" class="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 shadow-lg
+        transform -translate-x-64 md:translate-x-0 transition-transform z-30">
   <nav class="p-6 space-y-4">
     <a href="#perfil" class="block p-2 rounded hover:bg-purple-800">👤 Perfil</a>
     <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🎰 Slots</a>
-    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🃏 Tables</a>
-    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">💥 Crash</a>
     <a href="#novidades" class="block p-2 rounded hover:bg-purple-800">🎁 Promo</a>
-    <a href="#" class="block p-2 rounded hover:bg-purple-800">📅 Tarefas Diárias</a>
-    <a href="#" class="block p-2 rounded hover:bg-purple-800">💬 Chat</a>
-    <a href="#" class="block p-2 rounded hover:bg-purple-800">ℹ️ Sobre</a>
   </nav>
 </aside>
 
@@ -74,7 +66,6 @@
         <h3 class="text-xl font-bold mb-2">🎰 Slots Exclusivos</h3>
         <p>Novos slots com prémios especiais.</p>
       </div>
-
       <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
         <h3 class="text-xl font-bold mb-2">💎 Promoções Diárias</h3>
         <p>Bónus todos os dias para utilizadores ativos.</p>
@@ -82,49 +73,19 @@
     </div>
   </section>
 
-  <!-- ALERTA LOGIN -->
-  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl mt-6">
-    🔒 Para jogar precisas de criar conta ou fazer login
-  </div>
-
   <!-- LOGIN -->
-  <section id="login" class="hidden mt-6 max-w-md mx-auto">
-    <form id="login-form" class="bg-gray-800 p-6 rounded-xl space-y-4">
+  <section id="login" class="hidden max-w-md mx-auto bg-gray-800 p-6 rounded-xl space-y-4">
+    <h2 class="text-2xl font-bold text-center mb-4">🔑 Login</h2>
+    <form id="login-form" class="space-y-3">
       <input type="email" id="login-email" placeholder="Email" class="w-full p-2 rounded text-black" required>
       <input type="password" id="login-senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
       <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Entrar</button>
     </form>
   </section>
 
-  <!-- JOGOS -->
-  <section id="jogos" class="hidden">
-    <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
-        <h3 class="font-bold mb-2">Slot Machine</h3>
-        <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
-        <button onclick="spinSlot()" class="bg-purple-600 px-4 py-2 rounded">Girar</button>
-      </div>
-
-      <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl text-center">
-        <h3 class="font-bold mb-2">Dados</h3>
-        <div id="dice-display" class="text-5xl mb-4">🎲</div>
-        <button onclick="rollDice()" class="bg-pink-600 px-4 py-2 rounded">Lançar</button>
-      </div>
-
-      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
-        <h3 class="font-bold mb-2">Roleta</h3>
-        <div id="roulette-display" class="text-5xl mb-4">🎡</div>
-        <button onclick="spinRoulette()" class="bg-green-600 px-4 py-2 rounded">Girar</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- PERFIL / REGISTO -->
-  <section id="perfil" class="hidden mt-6">
-    <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil</h2>
-
+  <!-- PERFIL / REGISTRO -->
+  <section id="perfil" class="hidden">
+    <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil / Registro</h2>
     <form id="registro-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
       <input id="username" placeholder="Username" class="w-full p-2 rounded text-black" required>
       <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
@@ -142,7 +103,7 @@
       <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Criar Conta</button>
     </form>
 
-    <!-- COMPRAR BIGBET COINS -->
+    <!-- BIGBET COINS -->
     <div class="text-center mt-6">
       <label for="qtd-betcoin" class="font-bold mr-2">Comprar BigBet Coins:</label>
       <input type="number" id="qtd-betcoin" min="1" value="1" class="text-black p-1 rounded">
@@ -152,6 +113,28 @@
       </button>
     </div>
     <p class="mt-2">💰 BigBet Coins: <span id="bbcoin-count">0</span></p>
+  </section>
+
+  <!-- JOGOS -->
+  <section id="jogos" class="hidden">
+    <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Slot Machine</h3>
+        <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
+        <button onclick="spinSlot()" class="bg-purple-600 px-4 py-2 rounded">Girar</button>
+      </div>
+      <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Dados</h3>
+        <div id="dice-display" class="text-5xl mb-4">🎲</div>
+        <button onclick="rollDice()" class="bg-pink-600 px-4 py-2 rounded">Lançar</button>
+      </div>
+      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Roleta</h3>
+        <div id="roulette-display" class="text-5xl mb-4">🎡</div>
+        <button onclick="spinRoulette()" class="bg-green-600 px-4 py-2 rounded">Girar</button>
+      </div>
+    </div>
   </section>
 
 </main>
