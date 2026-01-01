@@ -66,3 +66,36 @@ const sidebar = document.getElementById('sidebar');
 menuBtn.addEventListener('click', () => {
   sidebar.classList.toggle('-translate-x-64');
 });
+
+// Preencher data de criação da conta automaticamente
+const dataCriacaoInput = document.getElementById('data_criacao');
+const today = new Date();
+dataCriacaoInput.value = today.toLocaleDateString('pt-PT');
+
+// Captura do formulário
+const registroForm = document.getElementById('registro-form');
+
+registroForm.addEventListener('submit', (e) => {
+  e.preventDefault(); // Evita reload da página
+
+  // Pega os valores
+  const usuario = registroForm.username.value;
+  const nome = registroForm.nome.value;
+  const apelido = registroForm.apelido.value;
+  const genero = registroForm.genero.value;
+  const dataNascimento = registroForm.data_nascimento.value;
+  const email = registroForm.email.value;
+  const telemovel = registroForm.telemovel.value;
+  const dataCriacao = registroForm.data_criacao.value;
+
+  // Aqui você poderia salvar em Firebase ou localStorage
+  console.log({
+    usuario, nome, apelido, genero, dataNascimento, email, telemovel, dataCriacao
+  });
+
+  alert(`Conta criada com sucesso!\nBem-vindo(a), ${usuario}!`);
+
+  registroForm.reset();
+  dataCriacaoInput.value = today.toLocaleDateString('pt-PT');
+});
+
