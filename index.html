@@ -63,23 +63,49 @@
     <h2>🎰 Mario Slot Machine</h2>
 
     <div id="slot-container">
-        <div id="reels">
-            <div class="reel" data-index="0"></div>
-            <div class="reel" data-index="1"></div>
-            <div class="reel" data-index="2"></div>
-            <div class="reel" data-index="3"></div>
-            <div class="reel" data-index="4"></div>
-        </div>
+  <section>
+    <header>
+      <div id="disponible">
+        <div id="credito">Crédito: <div id="cantidad">1000</div></div>
+        <div id="dinero"><span class="euros">€</span></div>
+      </div>
+      <div id="monedas"></div>
+      <div id="lanzar">Tirar</div>
+    </header>
 
-        <div class="controls">
-            <label>Aposta:</label>
-            <input type="number" id="slot-bet" value="50" min="10">
-            <button id="spin-btn">GIRAR</button>
+    <div class="ventanas">
+        <div class="ventana" id="ventana1">
+          <img src="assets/symbols/cherry.png">
         </div>
-
-        <div id="slot-result"></div>
-        <div id="slot-jackpot">Jackpot: 1000 coins</div>
+        <div class="ventana" id="ventana2">
+          <img src="assets/symbols/lemon.png">
+        </div>
+        <div class="ventana" id="ventana3">
+          <img src="assets/symbols/seven.png">
+        </div>
     </div>
+
+    <div class="botones">
+        <div class="boton" id="b0">Volver a tirar</div>
+        <div class="boton" id="b1">Volver a tirar</div>
+        <div class="boton" id="b2">Volver a tirar</div>
+    </div>
+
+    <div id="disponible">
+      <div id="logo"></div>
+      <div id="tablaPremios"></div>
+    </div>
+  </section>
+
+  <div id="velo">
+    <div id="cuadro_mensaje">
+      <img id="cruz" src="assets/logo.png" width="28px">
+      <div id="mensaje"></div>
+    </div>
+  </div>
+  <audio id="audio" src=""></audio>
+</div>
+
 </section>
 
         <section id="roleta" class="page">
@@ -94,7 +120,7 @@
 
     </main>
 </div>
-
+<link rel="stylesheet" href="css/slot-ervigio.css">
 <script src="js/slot-adv.js"></script>
 <script src="js/app.js"></script>
 </body>
