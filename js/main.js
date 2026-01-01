@@ -21,6 +21,32 @@ const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
 if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-translate-x-64"));
 
+// BOTÕES LOGIN / REGISTRO
+const btnLogin = document.getElementById("btn-login");
+const btnRegistro = document.getElementById("btn-registro");
+const perfilSection = document.getElementById("perfil");
+const jogosSection = document.getElementById("jogos");
+const loginAlert = document.getElementById("login-alert");
+
+// Mostrar seção de login/registro
+if (btnLogin) {
+  btnLogin.addEventListener("click", () => {
+    window.location.hash = "#perfil";
+    perfilSection.classList.remove("hidden");
+    jogosSection.classList.add("hidden");
+    loginAlert.classList.add("hidden");
+  });
+}
+
+if (btnRegistro) {
+  btnRegistro.addEventListener("click", () => {
+    window.location.hash = "#perfil";
+    perfilSection.classList.remove("hidden");
+    jogosSection.classList.add("hidden");
+    loginAlert.classList.add("hidden");
+  });
+}
+
 /* ======================
    REGISTO
 ====================== */
