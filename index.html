@@ -4,54 +4,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BigBet Casino</title>
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body class="bg-gray-900 text-white font-sans relative">
+
+  <!-- Fundo -->
+  <div class="fixed inset-0 bg-black">
+    <img src="assets/img/bg.jpg" class="w-full h-full object-cover opacity-50">
+  </div>
 
   <!-- HEADER -->
-  <header class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
+  <header class="relative z-10 flex justify-between items-center p-4 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
     <div class="flex items-center space-x-4">
       <img src="assets/img/logo.png" alt="Logo" class="w-16 h-16">
       <h1 class="text-2xl font-bold">BigBet Casino</h1>
     </div>
     <div>
-      <span class="font-mono bg-gray-800 px-3 py-1 rounded shadow">Saldo: <span id="saldo">1000</span> 🪙</span>
+      <span class="font-mono text-yellow-400 font-bold bg-gray-800 px-3 py-1 rounded shadow-lg">
+        Saldo: <span id="saldo">1000</span> 🪙
+      </span>
     </div>
   </header>
 
   <!-- MAIN - Jogos -->
-  <main class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-    
+  <main class="relative z-10 p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
     <!-- Slot Machine -->
-    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+    <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
       <h2 class="text-xl font-bold mb-2">Slot Machine</h2>
-      <div id="slot-display" class="text-5xl text-center mb-4">🎰🎰🎰</div>
-      <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">Girar</button>
+      <img src="assets/img/slot.png" alt="Slot Machine" class="mx-auto mb-4 w-24">
+      <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
+      <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded shadow-lg hover:shadow-pink-500/50 transition-all">Girar</button>
     </div>
 
     <!-- Dice Game -->
-    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+    <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
       <h2 class="text-xl font-bold mb-2">Jogo de Dados</h2>
-      <div id="dice-display" class="text-5xl text-center mb-4">🎲</div>
-      <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded">Lançar</button>
+      <img src="assets/img/dice.png" alt="Dice" class="mx-auto mb-4 w-24">
+      <div id="dice-display" class="text-5xl mb-4">🎲</div>
+      <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded shadow-lg hover:shadow-purple-500/50 transition-all">Lançar</button>
     </div>
 
-    <!-- Placeholder para outro jogo -->
-    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+    <!-- Roleta -->
+    <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
       <h2 class="text-xl font-bold mb-2">Roleta</h2>
-      <div id="roulette-display" class="text-5xl text-center mb-4">🎡</div>
-      <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Girar</button>
+      <img src="assets/img/roulette.png" alt="Roulette" class="mx-auto mb-4 w-24">
+      <div id="roulette-display" class="text-5xl mb-4">🎡</div>
+      <button onclick="spinRoulette()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow-lg hover:shadow-green-400/50 transition-all">Girar</button>
     </div>
 
   </main>
 
   <!-- FOOTER -->
-  <footer class="text-center p-4 bg-gray-800 mt-6">
+  <footer class="relative z-10 text-center p-4 bg-gray-800 mt-6">
     <p>© 2026 BigBet Casino - Apenas para fins de demonstração</p>
   </footer>
+
+  <!-- POPUP -->
+  <div id="popup" class="fixed inset-0 bg-black/70 flex justify-center items-center hidden z-20">
+    <div class="bg-purple-900 p-6 rounded-lg text-center text-white">
+      <p id="popup-msg" class="text-xl font-bold"></p>
+      <button onclick="closePopup()" class="mt-4 bg-pink-600 px-4 py-2 rounded hover:bg-pink-700">OK</button>
+    </div>
+  </div>
 
   <!-- JS -->
   <script src="js/main.js"></script>
