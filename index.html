@@ -1,123 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>BigBetRoyal Casino</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BigBet Casino</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="bg-gray-900 text-white font-sans">
 
-<header class="topbar">
-    <div class="top-left">
-        <img src="assets/logo.png" class="logo-img" alt="Logo BigBetRoyal">
-        <span class="logo-text">BigBetRoyal</span>
+  <!-- HEADER -->
+  <header class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
+    <div class="flex items-center space-x-4">
+      <img src="assets/img/logo.png" alt="Logo" class="w-16 h-16">
+      <h1 class="text-2xl font-bold">BigBet Casino</h1>
+    </div>
+    <div>
+      <span class="font-mono bg-gray-800 px-3 py-1 rounded shadow">Saldo: <span id="saldo">1000</span> 🪙</span>
+    </div>
+  </header>
+
+  <!-- MAIN - Jogos -->
+  <main class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+    <!-- Slot Machine -->
+    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+      <h2 class="text-xl font-bold mb-2">Slot Machine</h2>
+      <div id="slot-display" class="text-5xl text-center mb-4">🎰🎰🎰</div>
+      <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded">Girar</button>
     </div>
 
-    <nav class="top-menu">
-        <a href="#">Casino</a>
-        <a href="#">Desportos</a>
-        <a href="#">Promoções</a>
-        <a href="#">VIP</a>
-    </nav>
-
-    <div class="top-right">
-        <div class="balance">
-            💰 <span id="top-saldo">1000</span> COINS
-        </div>
-        <button class="btn-login">Login</button>
-    </div>
-</header>
-
-<div class="layout">
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <img src="assets/logo.png" alt="Logo" class="sidebar-logo-img">
-            <span class="sidebar-logo-text">BigBetRoyal</span>
-        </div>
-
-        <nav class="sidebar-menu">
-            <button data-page="home">🏠 Home</button>
-            <button data-page="slot">🎰 Slots</button>
-            <button data-page="roleta">🎡 Roleta</button>
-            <button data-page="crash">📈 Crash</button>
-        </nav>
-
-        <div class="sidebar-balance">
-            💰 Saldo: <span id="sidebar-saldo">1000</span> COINS
-        </div>
-    </aside>
-
-    <main class="content">
-
-        <section id="home" class="page active">
-            <h2>🔥 Jogos Populares</h2>
-            <div class="games-grid">
-                <div class="game-card" data-page="slot">
-                    <img src="assets/games/slot1.jpg" alt="Slot Royal 777">
-                    <span>Slot Royal 777</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="slot" class="page">
-    <h2>🎰 Mario Slot Machine</h2>
-
-    <header>
-        <div id="disponible">
-            <div id="credito">Crédito: <div id="cantidad"></div></div>
-            <div id="dinero"><span class="euros">€</span></div>
-        </div>
-        <div id="monedas"></div>
-        <div id="lanzar">Tirar</div>
-    </header>
-
-    <div class="ventanas">
-        <div class="ventana" id="ventana1">
-            <img src="img/tube.png">
-        </div>
-        <div class="ventana" id="ventana2">
-            <img src="img/tube.png">
-        </div>
-        <div class="ventana" id="ventana3">
-            <img src="img/tube.png">
-        </div>
+    <!-- Dice Game -->
+    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+      <h2 class="text-xl font-bold mb-2">Jogo de Dados</h2>
+      <div id="dice-display" class="text-5xl text-center mb-4">🎲</div>
+      <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded">Lançar</button>
     </div>
 
-    <div class="botones">
-        <div class="boton" id="b0">Volver a tirar</div>
-        <div class="boton" id="b1">Volver a tirar</div>
-        <div class="boton" id="b2">Volver a tirar</div>
+    <!-- Placeholder para outro jogo -->
+    <div class="bg-gray-800 p-4 rounded-lg shadow hover:scale-105 transition-transform">
+      <h2 class="text-xl font-bold mb-2">Roleta</h2>
+      <div id="roulette-display" class="text-5xl text-center mb-4">🎡</div>
+      <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Girar</button>
     </div>
 
-    <div id="disponible">
-        <div id="logo"></div>
-        <div id="tablaPremios"></div>
-    </div>
+  </main>
 
-    <div id="velo">
-        <div id="cuadro_mensaje">
-            <img id="cruz" src="img/star.ico" width="28px">
-            <div id="mensaje"></div>
-        </div>
-    </div>
+  <!-- FOOTER -->
+  <footer class="text-center p-4 bg-gray-800 mt-6">
+    <p>© 2026 BigBet Casino - Apenas para fins de demonstração</p>
+  </footer>
 
-    <audio id="audio" src=""></audio>
-</section>
-
-        <section id="roleta" class="page">
-            <h2>🎡 Roleta</h2>
-            <p>Em desenvolvimento</p>
-        </section>
-
-        <section id="crash" class="page">
-            <h2>📈 Crash</h2>
-            <p>Em desenvolvimento</p>
-        </section>
-
-    </main>
-</div>
-<link rel="stylesheet" href="css/slot-ervigio.css">
-<link rel="stylesheet" href="css/slot-ervigio.css">
-<script src="js/app.js"></script>
+  <!-- JS -->
+  <script src="js/main.js"></script>
 </body>
 </html>
