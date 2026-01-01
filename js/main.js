@@ -1,205 +1,287 @@
+// js/main.js
 import { auth, db } from "./firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
 /* ======================
-   MENU LATERAL
+   MENU LATERAL (MOBILE)
 ====================== */
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
-if(menuBtn) menuBtn.addEventListener("click",()=>sidebar.classList.toggle("-translate-x-64"));
+if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-translate-x-64"));
 
 /* ======================
-   SEÇÕES E BOTÕES
+   BOTÕES LOGIN / REGISTRO
 ====================== */
 const btnLogin = document.getElementById("btn-login");
 const btnRegistro = document.getElementById("btn-registro");
-const loginSection = document.getElementById("login");
 const perfilSection = document.getElementById("perfil");
 const jogosSection = document.getElementById("jogos");
 const loginAlert = document.getElementById("login-alert");
-const saldoBox = document.getElementById("saldo-box");
-const logoutBtn = document.getElementById("logout-btn");
-const bbcoinSpan = document.getElementById("bbcoin-count");
+const loginSection = document.getElementById("login"); // se criar seção de login separada
 
-/* ======================
-   LOGIN / REGISTRO TOGGLE
-====================== */
-if(btnLogin) btnLogin.addEventListener("click",()=>{
-    loginSection.classList.remove("hidden");
+// Mostrar seção de login
+if (btnLogin) {
+  btnLogin.addEventListener("click", () => {
+    window.location.hash = "#perfil"; // ou "#login" se tiver login separado
     perfilSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
-});
-if(btnRegistro) btnRegistro.addEventListener("click",()=>{
-    loginSection.classList.add("hidden");
+    loginAlert.classList.remove("hidden");
+  });
+}
+
+// Mostrar seção de registro
+if (btnRegistro) {
+  btnRegistro.addEventListener("click", () => {
+    window.location.hash = "#perfil";
     perfilSection.classList.remove("hidden");
     jogosSection.classList.add("hidden");
-});
+    loginAlert.classList.add("hidden");
+  });
+}
 
 /* ======================
-   REGISTRO
+   REGISTO
 ====================== */
 const registroForm = document.getElementById("registro-form");
-if(registroForm){
-  registroForm.addEventListener("submit",async(e)=>{
+if (registroForm) {
+  registroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const username=document.getElementById("username").value;
-    const nome=document.getElementById("nome").value;
-    const apelido=document.getElementById("apelido").value;
-    const genero=document.getElementById("genero").value;
-    const data_nascimento=document.getElementById("data_nascimento").value;
-    const email=document.getElementById("email").value;
-    const telemovel=document.getElementById("telemovel").value;
-    const senha=document.getElementById("senha").value;
-    const data_criacao=new Date().toISOString();
-    try{
-      const userCredential=await createUserWithEmailAndPassword(auth,email,senha);
-      const user=userCredential.user;
-      await setDoc(doc(db,"usuarios",user.uid),{username,nome,apelido,genero,data_nascimento,email,telemovel,data_criacao,saldo:1000,bigBetCoin:0});
+
+    const username = document.getElementById("username").value;
+    const nome = document.getElementById("nome").value;
+    const apelido = document.getElementById("apelido").value;
+    const genero = document.getElementById("genero").value;
+    const data_nascimento = document.getElementById("data_nascimento").value;
+    const email = document.getElementById("email").value;
+    const telemovel = document.getElementById("telemovel").value;
+    const senha = document.getElementById("senha").value;
+    const data_criacao = new Date().toISOString();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "usuarios", user.uid), {
+        username,
+        nome,
+        apelido,
+        genero,
+        data_nascimento,
+        email,
+        telemovel,
+        data_criacao,
+        saldo: 1000,
+        bigBetCoin: 0
+      });
+
       alert("Conta criada com sucesso!");
       registroForm.reset();
       perfilSection.classList.remove("hidden");
-      loginSection.classList.add("hidden");
       jogosSection.classList.remove("hidden");
-    }catch(error){alert(error.message);}
+      loginAlert.classList.add("hidden");
+      window.location.hash = "#perfil";
+
+    } catch (error) {
+      alert(error.message);
+    }
   });
 }
 
 /* ======================
    LOGIN
 ====================== */
-const loginForm=document.getElementById("login-form");
-if(loginForm){
-  loginForm.addEventListener("submit",async(e)=>{
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email=document.getElementById("login-email").value;
-    const senha=document.getElementById("login-senha").value;
-    try{
-      await signInWithEmailAndPassword(auth,email,senha);
-      loginSection.classList.add("hidden");
+
+    const email = document.getElementById("login-email").value;
+    const senha = document.getElementById("login-senha").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+
       perfilSection.classList.remove("hidden");
       jogosSection.classList.remove("hidden");
-      alert("Login efetuado!");
-    }catch(error){alert(error.message);}
+      loginAlert.classList.add("hidden");
+      window.location.hash = "#perfil";
+
+    } catch (error) {
+      alert(error.message);
+    }
   });
 }
+
+/* ======================
+   PERFIL / SALDO / BIGBET COINS
+====================== */
+const saldoBox = document.getElementById("saldo-box");
+const logoutBtn = document.getElementById("logout-btn");
+const bbcoinSpan = document.getElementById("bbcoin-count");
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    if (jogosSection) jogosSection.classList.add("hidden");
+    if (saldoBox) saldoBox.classList.add("hidden");
+    if (logoutBtn) logoutBtn.classList.add("hidden");
+    if (perfilSection) perfilSection.classList.add("hidden");
+    if (loginAlert) loginAlert.classList.remove("hidden");
+    return;
+  }
+
+  const snap = await getDoc(doc(db, "usuarios", user.uid));
+  if (!snap.exists()) return;
+
+  const data = snap.data();
+
+  if (jogosSection) jogosSection.classList.remove("hidden");
+  if (saldoBox) saldoBox.classList.remove("hidden");
+  if (logoutBtn) logoutBtn.classList.remove("hidden");
+  if (perfilSection) perfilSection.classList.remove("hidden");
+
+  window.saldoAtual = data.saldo;
+  document.getElementById("saldo").textContent = data.saldo.toFixed(2);
+  if (bbcoinSpan) bbcoinSpan.textContent = data.bigBetCoin || 0;
+  document.title = `BigBet - ${data.username}`;
+});
 
 /* ======================
    LOGOUT
 ====================== */
-if(logoutBtn){
-  logoutBtn.addEventListener("click",async()=>{
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
     await signOut(auth);
     perfilSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
-    loginSection.classList.remove("hidden");
-    alert("Logout efetuado!");
+    loginAlert.classList.remove("hidden");
+    window.location.hash = "#login";
   });
 }
 
 /* ======================
-   ATUALIZAR SALDO E BIGBET COINS
+   SALDO E APOSTAS
 ====================== */
-onAuthStateChanged(auth,async(user)=>{
-  if(!user){
-    perfilSection.classList.add("hidden");
-    jogosSection.classList.add("hidden");
-    loginSection.classList.remove("hidden");
-    return;
-  }
-  const snap=await getDoc(doc(db,"usuarios",user.uid));
-  if(!snap.exists()) return;
-  const data=snap.data();
-  window.saldoAtual=data.saldo;
-  document.getElementById("saldo").textContent=data.saldo.toFixed(2);
-  if(bbcoinSpan) bbcoinSpan.textContent=data.bigBetCoin||0;
-});
+async function atualizarSaldo(valor) {
+  const user = auth.currentUser;
+  if (!user) return;
 
-/* ======================
-   FUNÇÕES DE APOSTAS / JOGOS
-====================== */
-async function atualizarSaldo(valor){
-  const user=auth.currentUser;
-  if(!user) return;
-  const ref=doc(db,"usuarios",user.uid);
-  const snap=await getDoc(ref);
-  if(!snap.exists()) return;
-  let saldo=snap.data().saldo+valor;
-  if(saldo<0) saldo=0;
-  await updateDoc(ref,{saldo});
-  window.saldoAtual=saldo;
-  document.getElementById("saldo").textContent=saldo.toFixed(2);
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  let saldo = snap.data().saldo + valor;
+  if (saldo < 0) saldo = 0;
+
+  await updateDoc(ref, { saldo });
+  window.saldoAtual = saldo;
+  document.getElementById("saldo").textContent = saldo.toFixed(2);
 }
 
-async function apostar(valor){
-  const user=auth.currentUser;
-  if(!user) return alert("❌ Tens de estar logado para jogar");
-  if(window.saldoAtual+valor<0) return alert("⚠️ Saldo insuficiente!");
+async function apostar(valor) {
+  const user = auth.currentUser;
+  if (!user) return alert("❌ Tens de estar logado para jogar");
+  if (window.saldoAtual + valor < 0) return alert("⚠️ Saldo insuficiente!");
   await atualizarSaldo(valor);
 }
 
-async function comprarBigBetCoin(qtd){
-  const user=auth.currentUser;
-  if(!user) return alert("❌ Tens de estar logado para comprar BigBet Coins");
-  const ref=doc(db,"usuarios",user.uid);
-  const snap=await getDoc(ref);
-  if(!snap.exists()) return;
-  let saldo=snap.data().saldo;
-  let moedas=snap.data().bigBetCoin||0;
-  const precoPorMoeda=10;
-  if(saldo<qtd*precoPorMoeda) return alert("⚠️ Saldo insuficiente!");
-  saldo-=qtd*precoPorMoeda;
-  moedas+=qtd;
-  await updateDoc(ref,{saldo,bigBetCoin:moedas});
-  window.saldoAtual=saldo;
-  document.getElementById("saldo").textContent=saldo.toFixed(2);
-  if(bbcoinSpan) bbcoinSpan.textContent=moedas;
+/* ======================
+   BIGBET COINS
+====================== */
+async function comprarBigBetCoin(qtd) {
+  const user = auth.currentUser;
+  if (!user) return alert("❌ Tens de estar logado para comprar BigBet Coins");
+
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  let saldo = snap.data().saldo;
+  let moedas = snap.data().bigBetCoin || 0;
+
+  const precoPorMoeda = 10;
+  const custo = qtd * precoPorMoeda;
+
+  if (saldo < custo) return alert("⚠️ Saldo insuficiente!");
+
+  saldo -= custo;
+  moedas += qtd;
+
+  await updateDoc(ref, { saldo, bigBetCoin: moedas });
+
+  window.saldoAtual = saldo;
+  document.getElementById("saldo").textContent = saldo.toFixed(2);
+  if (bbcoinSpan) bbcoinSpan.textContent = moedas;
+
   alert(`🎉 Comprou ${qtd} BigBet Coins!`);
 }
 
 /* ======================
    SLOT MACHINE
 ====================== */
-function spinSlot(){
-  if(!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
-  const resultados=["🎰","🍒","🍋","🔔","💎"];
-  const slot1=resultados[Math.floor(Math.random()*resultados.length)];
-  const slot2=resultados[Math.floor(Math.random()*resultados.length)];
-  const slot3=resultados[Math.floor(Math.random()*resultados.length)];
-  const display=document.getElementById("slot-display");
-  if(display) display.textContent=slot1+slot2+slot3;
-  let ganho=0;
-  if(slot1===slot2 && slot2===slot3) ganho=500;
-  else if(slot1===slot2 || slot2===slot3 || slot1===slot3) ganho=100;
+function spinSlot() {
+  if (!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
+
+  const resultados = ["🎰","🍒","🍋","🔔","💎"];
+  const slot1 = resultados[Math.floor(Math.random()*resultados.length)];
+  const slot2 = resultados[Math.floor(Math.random()*resultados.length)];
+  const slot3 = resultados[Math.floor(Math.random()*resultados.length)];
+
+  const display = document.getElementById("slot-display");
+  if (display) display.textContent = slot1+slot2+slot3;
+
+  let ganho = 0;
+  if (slot1===slot2 && slot2===slot3) ganho=500;
+  else if (slot1===slot2 || slot2===slot3 || slot1===slot3) ganho=100;
   else ganho=-50;
+
   apostar(ganho);
 }
 
 /* ======================
-   DICE
+   DICE GAME
 ====================== */
-function rollDice(){
-  if(!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
-  const dado1=Math.floor(Math.random()*6)+1;
-  const dado2=Math.floor(Math.random()*6)+1;
-  const display=document.getElementById("dice-display");
-  if(display) display.textContent=`${dado1} 🎲 ${dado2}`;
-  let ganho=0;
-  if(dado1+dado2===12) ganho=200;
-  else if(dado1===dado2) ganho=100;
+function rollDice() {
+  if (!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
+
+  const dado1 = Math.floor(Math.random()*6)+1;
+  const dado2 = Math.floor(Math.random()*6)+1;
+
+  const display = document.getElementById("dice-display");
+  if (display) display.textContent = `${dado1} 🎲 ${dado2}`;
+
+  let ganho = 0;
+  if (dado1+dado2===12) ganho=200;
+  else if (dado1===dado2) ganho=100;
   else ganho=-20;
+
   apostar(ganho);
 }
 
 /* ======================
    ROULETTE
 ====================== */
-function spinRoulette(){
-  if(!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
-  const numeros=Array.from({length:36},(_,i)=>i+1);
-  const resultado=numeros[Math.floor(Math.random()*numeros.length)];
-  const display=document.getElementById("roulette-display");
-  if(display) display.textContent=resultado+" 🎡";
-  let ganho=resultado%2===0?100:-50;
+function spinRoulette() {
+  if (!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
+
+  const numeros = Array.from({length:36},(_,i)=>i+1);
+  const resultado = numeros[Math.floor(Math.random()*numeros.length)];
+
+  const display = document.getElementById("roulette-display");
+  if (display) display.textContent = resultado + " 🎡";
+
+  let ganho = resultado%2===0 ? 100 : -50;
   apostar(ganho);
 }
