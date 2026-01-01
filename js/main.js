@@ -9,14 +9,17 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 // ======= ELEMENTOS DO DOM =======
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
+
 const btnLogin = document.getElementById("btn-login");
 const btnRegistro = document.getElementById("btn-registro");
 const perfilSection = document.getElementById("perfil");
 const jogosSection = document.getElementById("jogos");
 const loginAlert = document.getElementById("login-alert");
 const loginSection = document.getElementById("login");
+
 const registroForm = document.getElementById("registro-form");
 const loginForm = document.getElementById("login-form");
+
 const saldoBox = document.getElementById("saldo-box");
 const logoutBtn = document.getElementById("logout-btn");
 const bbcoinSpan = document.getElementById("bbcoin-count");
@@ -24,7 +27,7 @@ const bbcoinSpan = document.getElementById("bbcoin-count");
 // ======= MENU MOBILE =======
 if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-translate-x-64"));
 
-// ======= LOGIN / REGISTRO BOTÕES =======
+// ======= LOGIN / REGISTRO =======
 if (btnLogin) {
   btnLogin.addEventListener("click", () => {
     loginSection.classList.remove("hidden");
@@ -36,7 +39,7 @@ if (btnLogin) {
 
 if (btnRegistro) {
   btnRegistro.addEventListener("click", () => {
-    perfilSection.classList.remove("hidden");
+    registroForm.parentElement.classList.remove("hidden");
     loginSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
@@ -47,7 +50,6 @@ if (btnRegistro) {
 if (registroForm) {
   registroForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const username = document.getElementById("username").value;
     const nome = document.getElementById("nome").value;
     const apelido = document.getElementById("apelido").value;
@@ -56,34 +58,45 @@ if (registroForm) {
     const email = document.getElementById("email").value;
     const telemovel = document.getElementById("telemovel").value;
     const senha = document.getElementById("senha").value;
+    const data_criacao = new Date().toISOString();
 
-    // criar usuário no Auth
-    const { data: user, error: authError } = await supabase.auth.signUp({ email, password: senha });
-    if (authError) return alert(authError.message);
-
-    // criar dados na tabela usuarios
-    const { error: dbError } = await supabase
-      .from("usuarios")
-      .insert([{
-        id: user.user.id,
-        username,
-        nome,
-        apelido,
-        genero,
-        data_nascimento,
+    try {
+      // Criar usuário no Supabase Auth
+      const { data: user, error: signUpError } = await supabase.auth.signUp({
         email,
-        telemovel,
-        saldo: 1000,
-        bigBetCoin: 0,
-        data_criacao: new Date()
-      }]);
-    if (dbError) return alert(dbError.message);
+        password: senha
+      });
 
-    alert("Conta criada com sucesso!");
-    registroForm.reset();
-    perfilSection.classList.remove("hidden");
-    jogosSection.classList.remove("hidden");
-    loginAlert.classList.add("hidden");
+      if (signUpError) throw signUpError;
+
+      // Criar registro no banco
+      const { error: dbError } = await supabase
+        .from("usuarios")
+        .insert([{
+          id: user.user.id,
+          username,
+          nome,
+          apelido,
+          genero,
+          data_nascimento,
+          email,
+          telemovel,
+          data_criacao,
+          saldo: 1000,
+          bigBetCoin: 0
+        }]);
+
+      if (dbError) throw dbError;
+
+      alert("Conta criada com sucesso!");
+      registroForm.reset();
+      perfilSection.classList.remove("hidden");
+      jogosSection.classList.remove("hidden");
+      loginAlert.classList.add("hidden");
+
+    } catch (err) {
+      alert("Erro: " + err.message);
+    }
   });
 }
 
@@ -91,18 +104,28 @@ if (registroForm) {
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const email = document.getElementById("login-email").value;
     const senha = document.getElementById("login-senha").value;
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password: senha });
-    if (error) return alert(error.message);
+    try {
+      const { data: session, error } = await supabase.auth.signInWithPassword({
+        email,
+        password: senha
+      });
 
-    alert("Login bem-sucedido!");
-    loginSection.classList.add("hidden");
-    perfilSection.classList.remove("hidden");
-    jogosSection.classList.remove("hidden");
-    loginAlert.classList.add("hidden");
+      if (error) throw error;
+
+      alert("Login efetuado com sucesso!");
+      loginSection.classList.add("hidden");
+      perfilSection.classList.remove("hidden");
+      jogosSection.classList.remove("hidden");
+      loginAlert.classList.add("hidden");
+
+      carregarPerfil();
+
+    } catch (err) {
+      alert("Erro: " + err.message);
+    }
   });
 }
 
@@ -116,73 +139,74 @@ if (logoutBtn) {
   });
 }
 
-// ======= CARREGAR DADOS DO PERFIL =======
+// ======= PERFIL =======
 async function carregarPerfil() {
-  const user = supabase.auth.user();
-  if (!user) {
-    perfilSection.classList.add("hidden");
-    jogosSection.classList.add("hidden");
-    saldoBox.classList.add("hidden");
-    return;
-  }
+  const user = supabase.auth.getUser();
+  const { data: sessionData } = await user;
+  if (!sessionData || !sessionData.user) return;
 
   const { data, error } = await supabase
     .from("usuarios")
     .select("*")
-    .eq("id", user.id)
+    .eq("id", sessionData.user.id)
     .single();
-  if (error) return console.error(error);
 
-  if (jogosSection) jogosSection.classList.remove("hidden");
-  if (saldoBox) saldoBox.classList.remove("hidden");
-  if (perfilSection) perfilSection.classList.remove("hidden");
+  if (error) return console.log(error);
 
-  window.saldoAtual = data.saldo;
   document.getElementById("saldo").textContent = data.saldo.toFixed(2);
-  if (bbcoinSpan) bbcoinSpan.textContent = data.bigBetCoin || 0;
+  bbcoinSpan.textContent = data.bigBetCoin;
   document.title = `BigBet - ${data.username}`;
 }
 
-// atualizar perfil quando autenticação muda
-supabase.auth.onAuthStateChange(() => {
-  carregarPerfil();
-});
-
-// ======= SALDO E APOSTAS =======
+// ======= SALDO =======
 async function atualizarSaldo(valor) {
-  const user = supabase.auth.user();
-  if (!user) return;
+  const { data: userSession } = await supabase.auth.getUser();
+  if (!userSession?.user) return alert("❌ Tens de estar logado");
 
   const { data, error } = await supabase
     .from("usuarios")
-    .update({ saldo: supabase.rpc("get_saldo", { user_id: user.id }) + valor })
-    .eq("id", user.id);
-  
-  window.saldoAtual = data?.saldo || 0;
-  document.getElementById("saldo").textContent = window.saldoAtual.toFixed(2);
+    .select("saldo")
+    .eq("id", userSession.user.id)
+    .single();
+
+  if (error) return console.log(error);
+
+  let novoSaldo = data.saldo + valor;
+  if (novoSaldo < 0) novoSaldo = 0;
+
+  await supabase
+    .from("usuarios")
+    .update({ saldo: novoSaldo })
+    .eq("id", userSession.user.id);
+
+  window.saldoAtual = novoSaldo;
+  document.getElementById("saldo").textContent = novoSaldo.toFixed(2);
 }
 
+// ======= APOSTAS =======
 async function apostar(valor) {
-  const user = supabase.auth.user();
-  if (!user) return alert("❌ Tens de estar logado para jogar");
+  const { data: userSession } = await supabase.auth.getUser();
+  if (!userSession?.user) return alert("❌ Tens de estar logado");
   if (window.saldoAtual + valor < 0) return alert("⚠️ Saldo insuficiente!");
   await atualizarSaldo(valor);
 }
 
 // ======= BIGBET COINS =======
 async function comprarBigBetCoin(qtd) {
-  const user = supabase.auth.user();
-  if (!user) return alert("❌ Tens de estar logado para comprar BigBet Coins");
+  const { data: userSession } = await supabase.auth.getUser();
+  if (!userSession?.user) return alert("❌ Tens de estar logado");
 
   const { data, error } = await supabase
     .from("usuarios")
-    .select("saldo, bigBetCoin")
-    .eq("id", user.id)
+    .select("*")
+    .eq("id", userSession.user.id)
     .single();
-  if (error) return console.error(error);
+
+  if (error) return console.log(error);
 
   let saldo = data.saldo;
-  let moedas = data.bigBetCoin || 0;
+  let moedas = data.bigBetCoin;
+
   const precoPorMoeda = 10;
   const custo = qtd * precoPorMoeda;
 
@@ -191,45 +215,40 @@ async function comprarBigBetCoin(qtd) {
   saldo -= custo;
   moedas += qtd;
 
-  const { error: updateError } = await supabase
+  await supabase
     .from("usuarios")
     .update({ saldo, bigBetCoin: moedas })
-    .eq("id", user.id);
-  if (updateError) return console.error(updateError);
+    .eq("id", userSession.user.id);
 
   window.saldoAtual = saldo;
   document.getElementById("saldo").textContent = saldo.toFixed(2);
-  if (bbcoinSpan) bbcoinSpan.textContent = moedas;
+  bbcoinSpan.textContent = moedas;
 
   alert(`🎉 Comprou ${qtd} BigBet Coins!`);
 }
 
 // ======= JOGOS =======
-function spinSlot() {
-  if (!supabase.auth.user()) return alert("❌ Tens de estar logado para jogar");
-  const resultados = ["🎰","🍒","🍋","🔔","💎"];
-  const slot1 = resultados[Math.floor(Math.random()*resultados.length)];
-  const slot2 = resultados[Math.floor(Math.random()*resultados.length)];
-  const slot3 = resultados[Math.floor(Math.random()*resultados.length)];
-  document.getElementById("slot-display").textContent = slot1+slot2+slot3;
-  let ganho = slot1===slot2 && slot2===slot3 ? 500 : slot1===slot2||slot2===slot3||slot1===slot3 ? 100 : -50;
-  apostar(ganho);
-}
+function spinSlot() { apostar(Math.random() > 0.5 ? 500 : -50); }
+function rollDice() { apostar(Math.random() > 0.5 ? 100 : -20); }
+function spinRoulette() { apostar(Math.random() > 0.5 ? 100 : -50); }
 
-function rollDice() {
-  if (!supabase.auth.user()) return alert("❌ Tens de estar logado para jogar");
-  const dado1 = Math.floor(Math.random()*6)+1;
-  const dado2 = Math.floor(Math.random()*6)+1;
-  document.getElementById("dice-display").textContent = `${dado1} 🎲 ${dado2}`;
-  let ganho = dado1+dado2===12 ? 200 : dado1===dado2 ? 100 : -20;
-  apostar(ganho);
-}
+// ======= VERIFICAR LOGIN AO CARREGAR =======
+window.addEventListener("DOMContentLoaded", async () => {
+  const { data: session } = await supabase.auth.getSession();
+  if (session?.user) {
+    perfilSection.classList.remove("hidden");
+    jogosSection.classList.remove("hidden");
+    loginAlert.classList.add("hidden");
+    carregarPerfil();
+  } else {
+    perfilSection.classList.add("hidden");
+    jogosSection.classList.add("hidden");
+    loginAlert.classList.remove("hidden");
+  }
+});
 
-function spinRoulette() {
-  if (!supabase.auth.user()) return alert("❌ Tens de estar logado para jogar");
-  const numeros = Array.from({length:36},(_,i)=>i+1);
-  const resultado = numeros[Math.floor(Math.random()*numeros.length)];
-  document.getElementById("roulette-display").textContent = resultado + " 🎡";
-  let ganho = resultado%2===0 ? 100 : -50;
-  apostar(ganho);
-}
+// Exportar funções para o onclick dos botões de jogos e BigBet Coins
+window.spinSlot = spinSlot;
+window.rollDice = rollDice;
+window.spinRoulette = spinRoulette;
+window.comprarBigBetCoin = comprarBigBetCoin;
