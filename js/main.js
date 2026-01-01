@@ -136,3 +136,50 @@ if (perfilForm) {
     alert("Perfil atualizado com sucesso!");
   });
 }
+
+/* ======================
+   SEGURANÇA - BLOQUEIO
+====================== */
+
+const jogosSection = document.getElementById("jogos");
+const saldoBox = document.getElementById("saldo-box");
+const logoutBtn = document.getElementById("logout-btn");
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    // ❌ NÃO LOGADO
+    if (jogosSection) jogosSection.classList.add("hidden");
+    if (saldoBox) saldoBox.classList.add("hidden");
+    if (logoutBtn) logoutBtn.classList.add("hidden");
+
+    // Forçar login
+    if (window.location.hash === "#perfil") {
+      window.location.hash = "#login";
+    }
+
+  } else {
+    // ✅ LOGADO
+    if (jogosSection) jogosSection.classList.remove("hidden");
+    if (saldoBox) saldoBox.classList.remove("hidden");
+    if (logoutBtn) logoutBtn.classList.remove("hidden");
+
+    // Buscar nome do utilizador
+    const snap = await getDoc(doc(db, "usuarios", user.uid));
+    if (snap.exists()) {
+      const d = snap.data();
+      document.title = `BigBet - ${d.username}`;
+    }
+  }
+});
+
+/* ======================
+   LOGOUT
+====================== */
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+    window.location.hash = "#login";
+  });
+}
+
