@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BigBet Casino</title>
+
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="bg-gray-900 text-white font-sans">
 
 <!-- FUNDO -->
@@ -22,12 +24,10 @@
     <img src="assets/img/logo_novo.png" class="w-14 h-14 rounded-full">
     <h1 class="text-2xl font-bold">BigBet Casino</h1>
   </div>
-
   <div class="flex items-center gap-3">
     <span id="saldo-box" class="hidden font-mono text-yellow-400 bg-gray-800 px-3 py-1 rounded">
       Saldo: <span id="saldo">1000</span> 🪙
     </span>
-
     <button id="logout-btn" class="hidden bg-red-600 hover:bg-red-700 px-3 py-1 rounded">
       Logout
     </button>
@@ -35,19 +35,25 @@
 </header>
 
 <!-- MENU LATERAL -->
-<aside id="sidebar" class="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 shadow-lg
-        transform -translate-x-64 md:translate-x-0 transition-transform z-30">
+<aside id="sidebar"
+  class="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 shadow-lg
+         transform -translate-x-64 md:translate-x-0 transition-transform z-30">
   <nav class="p-6 space-y-4">
     <a href="#perfil" class="block p-2 rounded hover:bg-purple-800">👤 Perfil</a>
     <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🎰 Slots</a>
+    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🃏 Tables</a>
+    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">💥 Crash</a>
     <a href="#novidades" class="block p-2 rounded hover:bg-purple-800">🎁 Promo</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">📅 Tarefas Diárias</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">💬 Chat</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">ℹ️ Sobre</a>
   </nav>
 </aside>
 
 <!-- MAIN -->
 <main class="mt-24 md:ml-64 p-6 space-y-16">
 
-  <!-- NOVIDADES -->
+  <!-- NOVIDADES / LOGIN / REGISTRO -->
   <section id="novidades">
     <h2 class="text-3xl font-bold text-center mb-6">🎉 Novidades</h2>
 
@@ -73,20 +79,25 @@
     </div>
   </section>
 
+  <!-- ALERTA LOGIN -->
+  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl">
+    🔒 Para jogar precisas de criar conta ou fazer login
+  </div>
+
   <!-- LOGIN -->
-  <section id="login" class="hidden max-w-md mx-auto bg-gray-800 p-6 rounded-xl space-y-4">
-    <h2 class="text-2xl font-bold text-center mb-4">🔑 Login</h2>
-    <form id="login-form" class="space-y-3">
+  <section id="login" class="hidden max-w-md mx-auto mt-6 p-6 bg-gray-800 rounded-xl shadow-xl">
+    <h2 class="text-2xl font-bold mb-4 text-center">🔑 Login</h2>
+    <form id="login-form" class="space-y-4">
       <input type="email" id="login-email" placeholder="Email" class="w-full p-2 rounded text-black" required>
       <input type="password" id="login-senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
       <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Entrar</button>
     </form>
   </section>
 
-  <!-- PERFIL / REGISTRO -->
-  <section id="perfil" class="hidden">
-    <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil / Registro</h2>
-    <form id="registro-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
+  <!-- REGISTRO / PERFIL -->
+  <section id="perfil" class="hidden max-w-2xl mx-auto mt-6 p-6 bg-gradient-to-b from-purple-700 to-pink-500 rounded-xl shadow-xl">
+    <h2 class="text-2xl font-bold mb-4 text-center">👤 Criar Conta</h2>
+    <form id="registro-form" class="space-y-4">
       <input id="username" placeholder="Username" class="w-full p-2 rounded text-black" required>
       <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
       <input id="apelido" placeholder="Apelido" class="w-full p-2 rounded text-black" required>
@@ -116,7 +127,7 @@
   </section>
 
   <!-- JOGOS -->
-  <section id="jogos" class="hidden">
+  <section id="jogos" class="hidden mt-12">
     <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
