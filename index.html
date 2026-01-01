@@ -86,20 +86,20 @@
     <div class="grid md:grid-cols-3 gap-6">
       <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
         <h3 class="font-bold mb-2">Slot Machine</h3>
-        <div class="text-5xl mb-4">🎰🎰🎰</div>
-        <button class="bg-purple-600 px-4 py-2 rounded">Girar</button>
+        <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
+        <button onclick="spinSlot()" class="bg-purple-600 px-4 py-2 rounded">Girar</button>
       </div>
 
       <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl text-center">
         <h3 class="font-bold mb-2">Dados</h3>
-        <div class="text-5xl mb-4">🎲</div>
-        <button class="bg-pink-600 px-4 py-2 rounded">Lançar</button>
+        <div id="dice-display" class="text-5xl mb-4">🎲</div>
+        <button onclick="rollDice()" class="bg-pink-600 px-4 py-2 rounded">Lançar</button>
       </div>
 
       <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
         <h3 class="font-bold mb-2">Roleta</h3>
-        <div class="text-5xl mb-4">🎡</div>
-        <button class="bg-green-600 px-4 py-2 rounded">Girar</button>
+        <div id="roulette-display" class="text-5xl mb-4">🎡</div>
+        <button onclick="spinRoulette()" class="bg-green-600 px-4 py-2 rounded">Girar</button>
       </div>
     </div>
   </section>
@@ -115,7 +115,7 @@
       <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
       <input id="apelido" placeholder="Apelido" class="w-full p-2 rounded text-black" required>
 
-      <select id="genero" class="w-full p-2 rounded text-black">
+      <select id="genero" class="w-full p-2 rounded text-black" required>
         <option value="">Género</option>
         <option>Masculino</option>
         <option>Feminino</option>
@@ -124,12 +124,25 @@
 
       <input type="date" id="data_nascimento" class="w-full p-2 rounded text-black" required>
       <input type="email" id="email" placeholder="Email" class="w-full p-2 rounded text-black" required>
-      <input id="telemovel" placeholder="Telemóvel" class="w-full p-2 rounded text-black" required>
+      <input type="tel" id="telemovel" placeholder="Telemóvel" class="w-full p-2 rounded text-black" required>
+      <input type="password" id="senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
 
-      <button class="w-full bg-yellow-400 text-black py-2 rounded font-bold">
+      <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">
         Criar Conta
       </button>
     </form>
+
+    <!-- COMPRAR BIGBET COINS -->
+    <div class="text-center mt-6">
+      <label for="qtd-betcoin" class="font-bold mr-2">Comprar BigBet Coins:</label>
+      <input type="number" id="qtd-betcoin" min="1" value="1" class="text-black p-1 rounded">
+      <button onclick="comprarBigBetCoin(parseInt(document.getElementById('qtd-betcoin').value))"
+        class="bg-yellow-400 px-4 py-2 rounded shadow-lg hover:bg-yellow-300 ml-2">
+        Comprar
+      </button>
+    </div>
+    <p class="mt-2">💰 BigBet Coins: <span id="bbcoin-count">0</span></p>
+
   </section>
 
 </main>
