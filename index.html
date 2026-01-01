@@ -9,7 +9,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body class="bg-gray-900 text-white font-sans">
 
 <!-- FUNDO -->
@@ -19,7 +18,6 @@
 
 <!-- HEADER -->
 <header class="fixed top-0 left-0 w-full h-20 z-40 flex justify-between items-center px-6 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
-
   <div class="flex items-center gap-4">
     <button id="menu-btn" class="text-2xl md:hidden">☰</button>
     <img src="assets/img/logo_novo.png" class="w-14 h-14 rounded-full">
@@ -85,25 +83,21 @@
   </section>
 
   <!-- ALERTA LOGIN -->
-  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl">
+  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl mt-6">
     🔒 Para jogar precisas de criar conta ou fazer login
   </div>
 
   <!-- LOGIN -->
-<section id="login" class="hidden max-w-md mx-auto mt-6 bg-gray-800 p-6 rounded-xl">
-  <h2 class="text-2xl font-bold text-center mb-4">Login</h2>
-  <form id="login-form" class="space-y-4">
-    <input type="email" id="login-email" placeholder="Email" class="w-full p-2 rounded text-black" required>
-    <input type="password" id="login-senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
-    <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">
-      Entrar
-    </button>
-  </form>
-</section>
-
+  <section id="login" class="hidden mt-6 max-w-md mx-auto">
+    <form id="login-form" class="bg-gray-800 p-6 rounded-xl space-y-4">
+      <input type="email" id="login-email" placeholder="Email" class="w-full p-2 rounded text-black" required>
+      <input type="password" id="login-senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
+      <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Entrar</button>
+    </form>
+  </section>
 
   <!-- JOGOS -->
-  <section id="jogos" class="hidden mt-8">
+  <section id="jogos" class="hidden">
     <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
 
     <div class="grid md:grid-cols-3 gap-6">
@@ -128,26 +122,23 @@
   </section>
 
   <!-- PERFIL / REGISTO -->
-  <section id="perfil" class="hidden mt-8">
+  <section id="perfil" class="hidden mt-6">
     <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil</h2>
 
     <form id="registro-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
       <input id="username" placeholder="Username" class="w-full p-2 rounded text-black" required>
       <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
       <input id="apelido" placeholder="Apelido" class="w-full p-2 rounded text-black" required>
-
       <select id="genero" class="w-full p-2 rounded text-black" required>
         <option value="">Género</option>
         <option>Masculino</option>
         <option>Feminino</option>
         <option>Outro</option>
       </select>
-
       <input type="date" id="data_nascimento" class="w-full p-2 rounded text-black" required>
       <input type="email" id="email" placeholder="Email" class="w-full p-2 rounded text-black" required>
       <input type="tel" id="telemovel" placeholder="Telemóvel" class="w-full p-2 rounded text-black" required>
       <input type="password" id="senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
-
       <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Criar Conta</button>
     </form>
 
