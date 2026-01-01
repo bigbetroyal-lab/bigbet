@@ -1,3 +1,4 @@
+// js/main.js
 import { auth, db } from "./firebase.js";
 
 import {
@@ -21,14 +22,15 @@ const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.getElementById("sidebar");
 if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-translate-x-64"));
 
-// BOTÕES LOGIN / REGISTRO
+/* ======================
+   BOTÕES LOGIN / REGISTRO
+====================== */
 const btnLogin = document.getElementById("btn-login");
 const btnRegistro = document.getElementById("btn-registro");
 const perfilSection = document.getElementById("perfil");
 const jogosSection = document.getElementById("jogos");
 const loginAlert = document.getElementById("login-alert");
 
-// Mostrar seção de login/registro
 if (btnLogin) {
   btnLogin.addEventListener("click", () => {
     window.location.hash = "#perfil";
@@ -62,7 +64,7 @@ if (registroForm) {
     const data_nascimento = document.getElementById("data_nascimento").value;
     const email = document.getElementById("email").value;
     const telemovel = document.getElementById("telemovel").value;
-    const senha = document.getElementById("senha").value;
+    const senha = document.getElementById("senha") ? document.getElementById("senha").value : "123456"; // Senha padrão se não houver input
     const data_criacao = new Date().toISOString();
 
     try {
@@ -95,10 +97,8 @@ if (registroForm) {
 /* ======================
    PERFIL E LOGIN
 ====================== */
-const jogosSection = document.getElementById("jogos");
 const saldoBox = document.getElementById("saldo-box");
 const logoutBtn = document.getElementById("logout-btn");
-const perfilSection = document.getElementById("perfil");
 const bbcoinSpan = document.getElementById("bbcoin-count");
 
 onAuthStateChanged(auth, async (user) => {
@@ -107,7 +107,7 @@ onAuthStateChanged(auth, async (user) => {
     if (saldoBox) saldoBox.classList.add("hidden");
     if (logoutBtn) logoutBtn.classList.add("hidden");
     if (perfilSection) perfilSection.classList.add("hidden");
-    if (window.location.hash === "#perfil") window.location.hash = "#login";
+    if (loginAlert) loginAlert.classList.remove("hidden");
     return;
   }
 
@@ -120,6 +120,7 @@ onAuthStateChanged(auth, async (user) => {
   if (saldoBox) saldoBox.classList.remove("hidden");
   if (logoutBtn) logoutBtn.classList.remove("hidden");
   if (perfilSection) perfilSection.classList.remove("hidden");
+  if (loginAlert) loginAlert.classList.add("hidden");
 
   window.saldoAtual = data.saldo;
   document.getElementById("saldo").textContent = data.saldo.toFixed(2);
@@ -210,4 +211,47 @@ function spinSlot() {
 
   let ganho = 0;
   if (slot1===slot2 && slot2===slot3) ganho=500;
-  else if (slot1===slot2 || slot2===slot3 || slot
+  else if (slot1===slot2 || slot2===slot3 || slot1===slot3) ganho=100;
+  else ganho=-50;
+
+  if (ganho>0) alert(`🎉 Ganhou ${ganho} moedas!`);
+  else alert(`😢 Perdeu ${-ganho} moedas.`);
+
+  apostar(ganho);
+}
+
+/* ======================
+   DICE GAME
+====================== */
+function rollDice() {
+  if (!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
+
+  const dado1 = Math.floor(Math.random()*6)+1;
+  const dado2 = Math.floor(Math.random()*6)+1;
+
+  const display = document.getElementById("dice-display");
+  if (display) display.textContent = `${dado1} 🎲 ${dado2}`;
+
+  let ganho = 0;
+  if (dado1+dado2 === 12) ganho=200;
+  else if (dado1===dado2) ganho=100;
+  else ganho=-20;
+
+  apostar(ganho);
+}
+
+/* ======================
+   ROULETTE
+====================== */
+function spinRoulette() {
+  if (!auth.currentUser) return alert("❌ Tens de estar logado para jogar");
+
+  const numeros = Array.from({length:36},(_,i)=>i+1);
+  const resultado = numeros[Math.floor(Math.random()*numeros.length)];
+
+  const display = document.getElementById("roulette-display");
+  if (display) display.textContent = resultado + " 🎡";
+
+  let ganho = resultado%2===0 ? 100 : -50;
+  apostar(ganho);
+}
