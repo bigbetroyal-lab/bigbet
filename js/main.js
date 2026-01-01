@@ -64,6 +64,6 @@ const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
 menuBtn.addEventListener('click', () => {
-  sidebar.classList.toggle('-translate-x-0'); // mostra ou esconde
+  sidebar.classList.toggle('-translate-x-64'); // mostra ou esconde
 });
 
