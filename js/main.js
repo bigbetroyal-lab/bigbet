@@ -59,7 +59,8 @@ if (registroForm) {
         email,
         telemovel,
         data_criacao,
-        saldo: 1000   // 🎁 saldo inicial
+        saldo: 1000,   // 🎁 saldo inicial
+        bigBetCoin: 0  // 🪙 BigBet Coin inicial
       });
 
       alert("Conta criada com sucesso!");
@@ -111,6 +112,10 @@ onAuthStateChanged(auth, async (user) => {
   if (saldoSpan) {
     saldoSpan.textContent = data.saldo.toFixed(2);
   }
+
+  // Mostrar BigBet Coins
+  const bbSpan = document.getElementById("bbcoin-count");
+  if (bbSpan) bbSpan.textContent = data.bigBetCoin || 0;
 
   // Guardar saldo local
   window.saldoAtual = data.saldo;
@@ -168,6 +173,10 @@ onAuthStateChanged(auth, async (user) => {
     if (snap.exists()) {
       const d = snap.data();
       document.title = `BigBet - ${d.username}`;
+
+      // Atualizar BigBet Coins UI
+      const bbSpan = document.getElementById("bbcoin-count");
+      if (bbSpan) bbSpan.textContent = d.bigBetCoin || 0;
     }
   }
 });
@@ -298,4 +307,44 @@ function spinRoulette() {
 
   let ganho = resultado % 2 === 0 ? 100 : -50;
   apostar(ganho);
+}
+
+/* ======================
+   BIGBET COIN
+====================== */
+async function comprarBigBetCoin(qtd) {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("❌ Tens de estar logado para comprar BigBet Coins");
+    return;
+  }
+
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return;
+
+  let saldo = snap.data().saldo;
+  let moedas = snap.data().bigBetCoin || 0;
+
+  const precoPorMoeda = 10; // 1 BigBet Coin = 10 moedas do saldo
+  const custo = qtd * precoPorMoeda;
+
+  if (saldo < custo) {
+    alert("⚠️ Saldo insuficiente para comprar esta quantidade de moedas!");
+    return;
+  }
+
+  saldo -= custo;
+  moedas += qtd;
+
+  await updateDoc(ref, { saldo, bigBetCoin: moedas });
+
+  window.saldoAtual = saldo;
+  document.getElementById("saldo").textContent = saldo.toFixed(2);
+
+  // Atualizar UI BigBet Coins
+  const bbSpan = document.getElementById("bbcoin-count");
+  if (bbSpan) bbSpan.textContent = moedas;
+
+  alert(`🎉 Comprou ${qtd} BigBet Coins!`);
 }
