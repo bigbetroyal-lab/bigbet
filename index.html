@@ -49,8 +49,22 @@
   </header>
 
   <!-- MAIN - Jogos -->
-  <main class="relative z-10 p-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:ml-64">
+  <main class="relative z-10 p-6 md:ml-64 space-y-8">
 
+  <!-- NOVIDADES / Destaques -->
+  <section id="novidades" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="bg-gradient-to-b from-purple-700 to-pink-600 p-6 rounded-xl shadow-xl text-center">
+      <h2 class="text-2xl font-bold mb-2">🎉 Novidade: Slots Exclusivos</h2>
+      <p>Experimente novos slots e ganhe prêmios especiais!</p>
+    </div>
+    <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
+      <h2 class="text-2xl font-bold mb-2">💎 Promoções</h2>
+      <p>Confira nossas promoções diárias e aumente seu saldo!</p>
+    </div>
+  </section>
+
+  <!-- JOGOS / Seção secundária -->
+  <section id="jogos" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
     <!-- Slot Machine -->
     <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
       <h2 class="text-xl font-bold mb-2">Slot Machine</h2>
@@ -74,8 +88,10 @@
       <div id="roulette-display" class="text-5xl mb-4">🎡</div>
       <button onclick="spinRoulette()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow-lg hover:shadow-green-400/50 transition-all">Girar</button>
     </div>
+  </section>
 
-  </main>
+</main>
+
 
   <!-- FOOTER -->
   <footer class="relative z-10 text-center p-4 bg-gray-800 mt-6 md:ml-64">
