@@ -1,7 +1,7 @@
 let saldo = 1000;
 const saldoEl = document.getElementById('saldo');
 
-// Funções de popup
+// POPUP
 function showPopup(msg) {
   document.getElementById('popup-msg').textContent = msg;
   document.getElementById('popup').classList.remove('hidden');
@@ -17,7 +17,7 @@ function updateSaldo(value) {
   saldoEl.textContent = saldo;
 }
 
-// Slot Machine
+// SLOT MACHINE
 function spinSlot() {
   const emojis = ['🍒', '🍋', '🍊', '💎', '7️⃣'];
   let result = [];
@@ -33,7 +33,7 @@ function spinSlot() {
   }
 }
 
-// Dice
+// DICE
 function rollDice() {
   const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
   const roll = diceFaces[Math.floor(Math.random() * diceFaces.length)];
@@ -46,7 +46,7 @@ function rollDice() {
   }
 }
 
-// Roulette
+// ROULETTE
 function spinRoulette() {
   const numbers = Array.from({length: 36}, (_, i) => i + 1);
   const roll = numbers[Math.floor(Math.random() * numbers.length)];
@@ -59,11 +59,10 @@ function spinRoulette() {
   }
 }
 
-// Menu lateral
+// MENU LATERAL TOGGLE
 const menuBtn = document.getElementById('menu-btn');
 const sidebar = document.getElementById('sidebar');
 
 menuBtn.addEventListener('click', () => {
-  sidebar.classList.toggle('-translate-x-64'); // mostra ou esconde
+  sidebar.classList.toggle('-translate-x-64');
 });
-
