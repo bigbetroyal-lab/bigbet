@@ -1,19 +1,5 @@
 // js/main.js
-import { auth, db } from "./firebase.js";
-
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-
-import {
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { supabase } from "./supabase.js";
 
 /* ======================
    MENU LATERAL (MOBILE)
