@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>BigBetRoyal Casino</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ===== CABEÇALHO ===== -->
 <header class="topbar">
     <div class="top-left">
-        <img src="/assets/logo.png" class="logo-img" alt="Logo BigBetRoyal">
+        <img src="assets/logo.png" class="logo-img" alt="Logo BigBetRoyal">
         <span class="logo-text">BigBetRoyal</span>
     </div>
 
@@ -29,13 +28,10 @@
     </div>
 </header>
 
-<!-- ===== LAYOUT PRINCIPAL ===== -->
 <div class="layout">
-
-    <!-- ===== SIDEBAR ===== -->
     <aside class="sidebar">
         <div class="sidebar-logo">
-            <img src="/assets/logo.png" alt="Logo" class="sidebar-logo-img">
+            <img src="assets/logo.png" alt="Logo" class="sidebar-logo-img">
             <span class="sidebar-logo-text">BigBetRoyal</span>
         </div>
 
@@ -44,9 +40,6 @@
             <button data-page="slot">🎰 Slots</button>
             <button data-page="roleta">🎡 Roleta</button>
             <button data-page="crash">📈 Crash</button>
-            <button data-page="ranking">🏆 Ranking</button>
-            <button data-page="promo">🎁 Promoções</button>
-            <button data-page="vip">💎 VIP</button>
         </nav>
 
         <div class="sidebar-balance">
@@ -54,72 +47,55 @@
         </div>
     </aside>
 
-    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main class="content">
 
-        <!-- HOME -->
         <section id="home" class="page active">
             <h2>🔥 Jogos Populares</h2>
             <div class="games-grid">
                 <div class="game-card" data-page="slot">
-                    <img src="/assets/games/slot1.jpg" alt="Slot Royal 777">
+                    <img src="assets/games/slot1.jpg" alt="Slot Royal 777">
                     <span>Slot Royal 777</span>
-                </div>
-                <div class="game-card" data-page="slot">
-                    <img src="/assets/games/slot2.jpg" alt="Mega Win Slots">
-                    <span>Mega Win Slots</span>
-                </div>
-                <div class="game-card" data-page="roleta">
-                    <img src="/assets/games/roleta.jpg" alt="Roleta">
-                    <span>Roleta Royal</span>
                 </div>
             </div>
         </section>
 
-        <!-- SLOT -->
         <section id="slot" class="page">
             <h2>🎰 Slot Royal 777</h2>
 
-<div id="slot-machine-adv">
-    <div class="reels-container">
-        <div class="reel" data-index="0"></div>
-        <div class="reel" data-index="1"></div>
-        <div class="reel" data-index="2"></div>
-        <div class="reel" data-index="3"></div>
-        <div class="reel" data-index="4"></div>
-    </div>
+            <div id="slot-machine-adv">
+                <div class="reels-container">
+                    <div class="reel" data-index="0"></div>
+                    <div class="reel" data-index="1"></div>
+                    <div class="reel" data-index="2"></div>
+                    <div class="reel" data-index="3"></div>
+                    <div class="reel" data-index="4"></div>
+                </div>
 
-    <div class="slot-controls">
-        <label>Aposta:</label>
-        <input type="number" id="slot-bet-adv" value="50" min="10">
-        <button id="slot-spin-adv">GIRAR</button>
-    </div>
+                <div class="slot-controls">
+                    <label>Aposta:</label>
+                    <input type="number" id="slot-bet-adv" value="50" min="10">
+                    <button id="slot-spin-adv">GIRAR</button>
+                </div>
 
-    <div id="slot-result-adv" style="margin-top:10px; font-weight:bold;"></div>
-    <div id="slot-jackpot-adv" style="margin-top:5px; font-weight:bold;">Jackpot: 1000 coins</div>
-</div>
-
-
+                <div id="slot-result-adv" style="margin-top:10px; font-weight:bold;"></div>
+                <div id="slot-jackpot-adv" style="margin-top:5px; font-weight:bold;">Jackpot: 1000 coins</div>
+            </div>
         </section>
 
-        <!-- ROLETA -->
         <section id="roleta" class="page">
             <h2>🎡 Roleta</h2>
             <p>Em desenvolvimento</p>
         </section>
 
-        <!-- CRASH -->
         <section id="crash" class="page">
             <h2>📈 Crash</h2>
             <p>Em desenvolvimento</p>
         </section>
 
     </main>
-
 </div>
 
-<!-- ===== JS ===== -->
-<script src="/js/app.js"></script>
-
+<script src="js/slot-adv.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
