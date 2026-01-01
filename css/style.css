@@ -1,10 +1,10 @@
-/* Exemplo de hover glow para moedas e botões */
+/* Botão com glow */
 button:hover {
-  box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+  box-shadow: 0 0 15px #ff00ff, 0 0 25px #ff00ff;
 }
 
-/* Fonte monoespace para saldo */
-#saldo {
-  font-weight: bold;
-  color: #ffd700;
+/* Fundo semi-transparente do body já feito no HTML */
+body {
+  overflow-x: hidden;
 }
+
