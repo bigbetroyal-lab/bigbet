@@ -4,190 +4,142 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BigBet Casino</title>
-  <!-- Tailwind CSS via CDN -->
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-900 text-white font-sans relative">
 
-  <!-- Fundo -->
-  <div class="fixed inset-0 bg-black">
-    <img src="assets/img/fundo_novo.jpg" class="w-full h-full object-cover opacity-50">
-  </div>
+<body class="bg-gray-900 text-white font-sans">
 
-  <!-- MENU LATERAL -->
-  <aside id="sidebar" class="fixed top-16 left-0 h-[calc(100%-4rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 text-white shadow-lg transform -translate-x-64 md:translate-x-0 transition-transform z-30">
-    <div class="p-6">
-      <h2 class="text-2xl font-bold mb-6"></h2>
-      <ul class="space-y-4">
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">👤 Perfil</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">🎰 Slots</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">🃏 Tables</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">💥 Crash</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">🎁 Promo</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">📅 Tarefas Diárias</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">💬 Chat</a></li>
-        <li><a href="#" class="flex items-center p-2 rounded hover:bg-purple-700 transition">ℹ️ Sobre</a></li>
-      </ul>
-    </div>
-  </aside>
-
-  <!-- HEADER FIXO -->
-  <header class="fixed top-0 left-0 w-full z-40 flex justify-between items-center p-4 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
-    <div class="flex items-center space-x-4">
-      <!-- Botão Hamburger -->
-      <button id="menu-btn" class="text-white text-2xl md:hidden mr-4">☰</button>
-
-      <img src="assets/img/logo_novo.png" alt="BigBet Logo" class="w-16 h-16 shadow-lg rounded-full">
-      <h1 class="text-2xl font-bold">BigBet Casino</h1>
-    </div>
-    <div>
-      <span id="saldo-box" class="font-mono text-yellow-400 font-bold bg-gray-800 px-3 py-1 rounded shadow-lg hidden">
-        Saldo: <span id="saldo">1000</span> 🪙
-      </span>
-      <button id="logout-btn"
-  class="ml-4 bg-red-600 hover:bg-red-700 px-3 py-1 rounded shadow hidden">
-  Logout
-</button>
-    </div>
-  </header>
-
-  <!-- MAIN -->
-  <main class="relative z-10 p-6 md:ml-64 space-y-12 mt-28">
-
-    <!-- NOVIDADES / Destaques -->
-    <section id="novidades">
-      <h2 class="text-3xl font-bold text-center mb-6">🎉 Novidades</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-gradient-to-b from-purple-700 to-pink-600 p-6 rounded-xl shadow-xl text-center">
-          <h3 class="text-2xl font-bold mb-2">🎰 Novidade: Slots Exclusivos</h3>
-          <p>Experimente novos slots e ganhe prêmios especiais!</p>
-        </div>
-        <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
-          <h3 class="text-2xl font-bold mb-2">💎 Promoções</h3>
-          <p>Confira nossas promoções diárias e aumente seu saldo!</p>
-        </div>
-      </div>
-    </section>
-    <div id="login-alert" class="text-center bg-red-700 p-4 rounded-xl shadow-lg">
-  <p class="text-lg font-bold">
-    🔒 Para jogar precisas de criar conta ou fazer login
-  </p>
+<!-- FUNDO -->
+<div class="fixed inset-0 -z-10">
+  <img src="assets/img/fundo_novo.jpg" class="w-full h-full object-cover opacity-50">
 </div>
 
-    <!-- JOGOS / Seção principal -->
-    <section id="jogos">
-      <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <!-- PERFIL / REGISTRO -->
-<section id="perfil" class="p-6 md:ml-64 mt-28 relative z-10">
-  <h2 class="text-3xl font-bold text-center mb-6">📝 Criar Conta / Perfil</h2>
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full h-20 z-40 flex justify-between items-center px-6 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
 
-  <form id="registro-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl shadow-xl space-y-4 text-white">
-
-    <!-- Nome de usuário -->
-    <div>
-      <label for="username" class="block mb-1 font-semibold">Nome de usuário</label>
-      <input type="text" id="username" name="username" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- Nome -->
-    <div>
-      <label for="nome" class="block mb-1 font-semibold">Nome</label>
-      <input type="text" id="nome" name="nome" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- Apelido -->
-    <div>
-      <label for="apelido" class="block mb-1 font-semibold">Apelido</label>
-      <input type="text" id="apelido" name="apelido" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- Gênero -->
-    <div>
-      <label for="genero" class="block mb-1 font-semibold">Gênero</label>
-      <select id="genero" name="genero" required class="w-full p-2 rounded text-black">
-        <option value="">Selecione</option>
-        <option value="masculino">Masculino</option>
-        <option value="feminino">Feminino</option>
-        <option value="outro">Outro</option>
-      </select>
-    </div>
-
-    <!-- Data de nascimento -->
-    <div>
-      <label for="data_nascimento" class="block mb-1 font-semibold">Data de nascimento</label>
-      <input type="date" id="data_nascimento" name="data_nascimento" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- E-mail -->
-    <div>
-      <label for="email" class="block mb-1 font-semibold">E-mail</label>
-      <input type="email" id="email" name="email" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- Telemóvel -->
-    <div>
-      <label for="telemovel" class="block mb-1 font-semibold">Telemóvel</label>
-      <input type="tel" id="telemovel" name="telemovel" required class="w-full p-2 rounded text-black">
-    </div>
-
-    <!-- Data de criação da conta -->
-    <div>
-      <label for="data_criacao" class="block mb-1 font-semibold">Data de criação da conta</label>
-      <input type="text" id="data_criacao" name="data_criacao" readonly class="w-full p-2 rounded text-black bg-gray-300">
-    </div>
-
-    <!-- Botão registrar -->
-    <div class="text-center">
-      <button type="submit" class="bg-yellow-400 text-black px-6 py-2 rounded shadow-lg hover:bg-yellow-300 transition-all">Criar Conta</button>
-    </div>
-
-  </form>
-</section>
-        <!-- Slot Machine -->
-        <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-          <h3 class="text-xl font-bold mb-2">Slot Machine</h3>
-          <img src="assets/img/slot.png" alt="Slot Machine" class="mx-auto mb-4 w-24">
-          <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
-          <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded shadow-lg hover:shadow-pink-500/50 transition-all">Girar</button>
-        </div>
-
-        <!-- Dice Game -->
-        <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-          <h3 class="text-xl font-bold mb-2">Jogo de Dados</h3>
-          <img src="assets/img/dice.png" alt="Dice" class="mx-auto mb-4 w-24">
-          <div id="dice-display" class="text-5xl mb-4">🎲</div>
-          <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded shadow-lg hover:shadow-purple-500/50 transition-all">Lançar</button>
-        </div>
-
-        <!-- Roleta -->
-        <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-          <h3 class="text-xl font-bold mb-2">Roleta</h3>
-          <img src="assets/img/roulette.png" alt="Roulette" class="mx-auto mb-4 w-24">
-          <div id="roulette-display" class="text-5xl mb-4">🎡</div>
-          <button onclick="spinRoulette()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow-lg hover:shadow-green-400/50 transition-all">Girar</button>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="relative z-10 text-center p-4 bg-gray-800 mt-12 md:ml-64">
-    <p>© 2026 BigBet Casino - Apenas para fins de demonstração</p>
-  </footer>
-
-  <!-- POPUP -->
-  <div id="popup" class="fixed inset-0 bg-black/70 flex justify-center items-center hidden z-50">
-    <div class="bg-purple-900 p-6 rounded-lg text-center text-white">
-      <p id="popup-msg" class="text-xl font-bold"></p>
-      <button onclick="closePopup()" class="mt-4 bg-pink-600 px-4 py-2 rounded hover:bg-pink-700">OK</button>
-    </div>
+  <div class="flex items-center gap-4">
+    <button id="menu-btn" class="text-2xl md:hidden">☰</button>
+    <img src="assets/img/logo_novo.png" class="w-14 h-14 rounded-full">
+    <h1 class="text-2xl font-bold">BigBet Casino</h1>
   </div>
 
-  <!-- JS -->
-  <script type="module" src="js/main.js"></script>
+  <div class="flex items-center gap-3">
+    <span id="saldo-box" class="hidden font-mono text-yellow-400 bg-gray-800 px-3 py-1 rounded">
+      Saldo: <span id="saldo">1000</span> 🪙
+    </span>
+
+    <button id="logout-btn" class="hidden bg-red-600 hover:bg-red-700 px-3 py-1 rounded">
+      Logout
+    </button>
+  </div>
+</header>
+
+<!-- MENU LATERAL -->
+<aside id="sidebar"
+  class="fixed top-20 left-0 h-[calc(100%-5rem)] w-64 bg-gradient-to-b from-purple-700 to-pink-500 shadow-lg
+         transform -translate-x-64 md:translate-x-0 transition-transform z-30">
+
+  <nav class="p-6 space-y-4">
+    <a href="#perfil" class="block p-2 rounded hover:bg-purple-800">👤 Perfil</a>
+    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🎰 Slots</a>
+    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">🃏 Tables</a>
+    <a href="#jogos" class="block p-2 rounded hover:bg-purple-800">💥 Crash</a>
+    <a href="#novidades" class="block p-2 rounded hover:bg-purple-800">🎁 Promo</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">📅 Tarefas Diárias</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">💬 Chat</a>
+    <a href="#" class="block p-2 rounded hover:bg-purple-800">ℹ️ Sobre</a>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<main class="mt-24 md:ml-64 p-6 space-y-16">
+
+  <!-- NOVIDADES -->
+  <section id="novidades">
+    <h2 class="text-3xl font-bold text-center mb-6">🎉 Novidades</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gradient-to-b from-purple-700 to-pink-600 p-6 rounded-xl shadow-xl text-center">
+        <h3 class="text-xl font-bold mb-2">🎰 Slots Exclusivos</h3>
+        <p>Novos slots com prémios especiais.</p>
+      </div>
+
+      <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
+        <h3 class="text-xl font-bold mb-2">💎 Promoções Diárias</h3>
+        <p>Bónus todos os dias para utilizadores ativos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ALERTA LOGIN -->
+  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl">
+    🔒 Para jogar precisas de criar conta ou fazer login
+  </div>
+
+  <!-- JOGOS -->
+  <section id="jogos" class="hidden">
+    <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Slot Machine</h3>
+        <div class="text-5xl mb-4">🎰🎰🎰</div>
+        <button class="bg-purple-600 px-4 py-2 rounded">Girar</button>
+      </div>
+
+      <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Dados</h3>
+        <div class="text-5xl mb-4">🎲</div>
+        <button class="bg-pink-600 px-4 py-2 rounded">Lançar</button>
+      </div>
+
+      <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl text-center">
+        <h3 class="font-bold mb-2">Roleta</h3>
+        <div class="text-5xl mb-4">🎡</div>
+        <button class="bg-green-600 px-4 py-2 rounded">Girar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFIL / REGISTO -->
+  <section id="perfil" class="hidden">
+    <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil</h2>
+
+    <form id="registro-form"
+      class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
+
+      <input id="username" placeholder="Username" class="w-full p-2 rounded text-black" required>
+      <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
+      <input id="apelido" placeholder="Apelido" class="w-full p-2 rounded text-black" required>
+
+      <select id="genero" class="w-full p-2 rounded text-black">
+        <option value="">Género</option>
+        <option>Masculino</option>
+        <option>Feminino</option>
+        <option>Outro</option>
+      </select>
+
+      <input type="date" id="data_nascimento" class="w-full p-2 rounded text-black" required>
+      <input type="email" id="email" placeholder="Email" class="w-full p-2 rounded text-black" required>
+      <input id="telemovel" placeholder="Telemóvel" class="w-full p-2 rounded text-black" required>
+
+      <button class="w-full bg-yellow-400 text-black py-2 rounded font-bold">
+        Criar Conta
+      </button>
+    </form>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="md:ml-64 text-center p-4 bg-gray-800 mt-12">
+  © 2026 BigBet Casino — Demonstração
+</footer>
+
+<!-- JS -->
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
