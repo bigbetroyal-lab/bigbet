@@ -32,8 +32,8 @@
     </div>
   </aside>
 
-  <!-- HEADER -->
-  <main class="relative z-10 p-6 md:ml-64 space-y-8 mt-20">
+  <!-- HEADER FIXO -->
+  <header class="fixed top-0 left-0 w-full z-40 flex justify-between items-center p-4 bg-gradient-to-r from-purple-700 to-pink-500 shadow-lg">
     <div class="flex items-center space-x-4">
       <!-- Botão Hamburger -->
       <button id="menu-btn" class="text-white text-2xl md:hidden mr-4">☰</button>
@@ -48,58 +48,65 @@
     </div>
   </header>
 
-  <!-- MAIN - Jogos -->
-  <main class="relative z-10 p-6 md:ml-64 space-y-8">
+  <!-- MAIN -->
+  <main class="relative z-10 p-6 md:ml-64 space-y-12 mt-28">
 
-  <!-- NOVIDADES / Destaques -->
-  <section id="novidades" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="bg-gradient-to-b from-purple-700 to-pink-600 p-6 rounded-xl shadow-xl text-center">
-      <h2 class="text-2xl font-bold mb-2">🎉 Novidade: Slots Exclusivos</h2>
-      <p>Experimente novos slots e ganhe prêmios especiais!</p>
-    </div>
-    <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
-      <h2 class="text-2xl font-bold mb-2">💎 Promoções</h2>
-      <p>Confira nossas promoções diárias e aumente seu saldo!</p>
-    </div>
-  </section>
+    <!-- NOVIDADES / Destaques -->
+    <section id="novidades">
+      <h2 class="text-3xl font-bold text-center mb-6">🎉 Novidades</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gradient-to-b from-purple-700 to-pink-600 p-6 rounded-xl shadow-xl text-center">
+          <h3 class="text-2xl font-bold mb-2">🎰 Novidade: Slots Exclusivos</h3>
+          <p>Experimente novos slots e ganhe prêmios especiais!</p>
+        </div>
+        <div class="bg-gradient-to-b from-pink-600 to-purple-700 p-6 rounded-xl shadow-xl text-center">
+          <h3 class="text-2xl font-bold mb-2">💎 Promoções</h3>
+          <p>Confira nossas promoções diárias e aumente seu saldo!</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- JOGOS / Seção secundária -->
-  <section id="jogos" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-    <!-- Slot Machine -->
-    <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-      <h2 class="text-xl font-bold mb-2">Slot Machine</h2>
-      <img src="assets/img/slot.png" alt="Slot Machine" class="mx-auto mb-4 w-24">
-      <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
-      <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded shadow-lg hover:shadow-pink-500/50 transition-all">Girar</button>
-    </div>
+    <!-- JOGOS / Seção principal -->
+    <section id="jogos">
+      <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <!-- Dice Game -->
-    <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-      <h2 class="text-xl font-bold mb-2">Jogo de Dados</h2>
-      <img src="assets/img/dice.png" alt="Dice" class="mx-auto mb-4 w-24">
-      <div id="dice-display" class="text-5xl mb-4">🎲</div>
-      <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded shadow-lg hover:shadow-purple-500/50 transition-all">Lançar</button>
-    </div>
+        <!-- Slot Machine -->
+        <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
+          <h3 class="text-xl font-bold mb-2">Slot Machine</h3>
+          <img src="assets/img/slot.png" alt="Slot Machine" class="mx-auto mb-4 w-24">
+          <div id="slot-display" class="text-5xl mb-4">🎰🎰🎰</div>
+          <button onclick="spinSlot()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded shadow-lg hover:shadow-pink-500/50 transition-all">Girar</button>
+        </div>
 
-    <!-- Roleta -->
-    <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
-      <h2 class="text-xl font-bold mb-2">Roleta</h2>
-      <img src="assets/img/roulette.png" alt="Roulette" class="mx-auto mb-4 w-24">
-      <div id="roulette-display" class="text-5xl mb-4">🎡</div>
-      <button onclick="spinRoulette()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow-lg hover:shadow-green-400/50 transition-all">Girar</button>
-    </div>
-  </section>
+        <!-- Dice Game -->
+        <div class="bg-gradient-to-b from-pink-600 to-purple-800 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
+          <h3 class="text-xl font-bold mb-2">Jogo de Dados</h3>
+          <img src="assets/img/dice.png" alt="Dice" class="mx-auto mb-4 w-24">
+          <div id="dice-display" class="text-5xl mb-4">🎲</div>
+          <button onclick="rollDice()" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded shadow-lg hover:shadow-purple-500/50 transition-all">Lançar</button>
+        </div>
 
-</main>
+        <!-- Roleta -->
+        <div class="bg-gradient-to-b from-purple-800 to-pink-600 p-4 rounded-xl shadow-xl hover:scale-105 transition-transform text-center">
+          <h3 class="text-xl font-bold mb-2">Roleta</h3>
+          <img src="assets/img/roulette.png" alt="Roulette" class="mx-auto mb-4 w-24">
+          <div id="roulette-display" class="text-5xl mb-4">🎡</div>
+          <button onclick="spinRoulette()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded shadow-lg hover:shadow-green-400/50 transition-all">Girar</button>
+        </div>
 
+      </div>
+    </section>
+
+  </main>
 
   <!-- FOOTER -->
-  <footer class="relative z-10 text-center p-4 bg-gray-800 mt-6 md:ml-64">
+  <footer class="relative z-10 text-center p-4 bg-gray-800 mt-12 md:ml-64">
     <p>© 2026 BigBet Casino - Apenas para fins de demonstração</p>
   </footer>
 
   <!-- POPUP -->
-  <div id="popup" class="fixed inset-0 bg-black/70 flex justify-center items-center hidden z-20">
+  <div id="popup" class="fixed inset-0 bg-black/70 flex justify-center items-center hidden z-50">
     <div class="bg-purple-900 p-6 rounded-lg text-center text-white">
       <p id="popup-msg" class="text-xl font-bold"></p>
       <button onclick="closePopup()" class="mt-4 bg-pink-600 px-4 py-2 rounded hover:bg-pink-700">OK</button>
