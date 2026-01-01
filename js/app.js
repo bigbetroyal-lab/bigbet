@@ -1,20 +1,10 @@
-// ==== CONTROLE DE TELAS ====
-document.querySelectorAll('.sidebar-menu button').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const page = btn.dataset.page;
+document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const page = card.dataset.page;
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(page).classList.add('active');
 
-        // Oculta todas
-        document.querySelectorAll('.page').forEach(sec => {
-            sec.classList.remove('active');
-        });
-
-        // Mostra a selecionada
-        const target = document.getElementById(page);
-        if (target) {
-            target.classList.add('active');
-        }
-
-        // Atualiza título ou lógica adicional
-        console.log("Página mostrada:", page);
+        if(page === 'slot-mario') iniciarSlotMario(); // inicializa o slot
     });
 });
+
