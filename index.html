@@ -60,7 +60,7 @@
   <!-- NOVIDADES -->
   <section id="novidades">
     <h2 class="text-3xl font-bold text-center mb-6">🎉 Novidades</h2>
-    
+
     <!-- BOTÕES LOGIN / REGISTRO -->
     <div class="text-center mt-8 space-x-4">
       <button id="btn-login" class="bg-yellow-400 text-black px-6 py-2 rounded shadow-lg hover:bg-yellow-300">
@@ -85,12 +85,23 @@
   </section>
 
   <!-- ALERTA LOGIN -->
-  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl mt-6">
+  <div id="login-alert" class="bg-red-700 text-center p-4 rounded-xl">
     🔒 Para jogar precisas de criar conta ou fazer login
   </div>
 
+  <!-- LOGIN -->
+  <section id="login" class="hidden mt-6">
+    <h2 class="text-3xl font-bold text-center mb-6">🔑 Login</h2>
+
+    <form id="login-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
+      <input type="email" id="login-email" placeholder="Email" class="w-full p-2 rounded text-black" required>
+      <input type="password" id="login-senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
+      <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Entrar</button>
+    </form>
+  </section>
+
   <!-- JOGOS -->
-  <section id="jogos" class="hidden mt-6">
+  <section id="jogos" class="hidden mt-8">
     <h2 class="text-3xl font-bold text-center mb-6">🎮 Jogos</h2>
 
     <div class="grid md:grid-cols-3 gap-6">
@@ -115,12 +126,10 @@
   </section>
 
   <!-- PERFIL / REGISTO -->
-  <section id="perfil" class="hidden mt-6">
+  <section id="perfil" class="hidden mt-8">
     <h2 class="text-3xl font-bold text-center mb-6">👤 Perfil</h2>
 
-    <form id="registro-form"
-      class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
-
+    <form id="registro-form" class="max-w-2xl mx-auto bg-gradient-to-b from-purple-700 to-pink-500 p-6 rounded-xl space-y-4">
       <input id="username" placeholder="Username" class="w-full p-2 rounded text-black" required>
       <input id="nome" placeholder="Nome" class="w-full p-2 rounded text-black" required>
       <input id="apelido" placeholder="Apelido" class="w-full p-2 rounded text-black" required>
@@ -137,9 +146,7 @@
       <input type="tel" id="telemovel" placeholder="Telemóvel" class="w-full p-2 rounded text-black" required>
       <input type="password" id="senha" placeholder="Senha" class="w-full p-2 rounded text-black" required>
 
-      <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">
-        Criar Conta
-      </button>
+      <button type="submit" class="w-full bg-yellow-400 text-black py-2 rounded font-bold">Criar Conta</button>
     </form>
 
     <!-- COMPRAR BIGBET COINS -->
@@ -152,7 +159,6 @@
       </button>
     </div>
     <p class="mt-2">💰 BigBet Coins: <span id="bbcoin-count">0</span></p>
-
   </section>
 
 </main>
