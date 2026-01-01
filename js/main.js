@@ -30,11 +30,14 @@ const btnRegistro = document.getElementById("btn-registro");
 const perfilSection = document.getElementById("perfil");
 const jogosSection = document.getElementById("jogos");
 const loginAlert = document.getElementById("login-alert");
+const loginSection = document.getElementById("login");
 
+// Mostrar seção de login/registro
 if (btnLogin) {
   btnLogin.addEventListener("click", () => {
-    window.location.hash = "#perfil";
-    perfilSection.classList.remove("hidden");
+    window.location.hash = "#login";
+    loginSection.classList.remove("hidden");
+    perfilSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
@@ -44,6 +47,7 @@ if (btnRegistro) {
   btnRegistro.addEventListener("click", () => {
     window.location.hash = "#perfil";
     perfilSection.classList.remove("hidden");
+    loginSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
@@ -64,7 +68,7 @@ if (registroForm) {
     const data_nascimento = document.getElementById("data_nascimento").value;
     const email = document.getElementById("email").value;
     const telemovel = document.getElementById("telemovel").value;
-    const senha = document.getElementById("senha") ? document.getElementById("senha").value : "123456"; // Senha padrão se não houver input
+    const senha = document.getElementById("senha").value;
     const data_criacao = new Date().toISOString();
 
     try {
@@ -95,7 +99,31 @@ if (registroForm) {
 }
 
 /* ======================
-   PERFIL E LOGIN
+   LOGIN
+====================== */
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const senha = document.getElementById("login-senha").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+      window.location.hash = "#perfil";
+      loginSection.classList.add("hidden");
+      perfilSection.classList.remove("hidden");
+      jogosSection.classList.remove("hidden");
+      loginAlert.classList.add("hidden");
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+}
+
+/* ======================
+   PERFIL / SALDO / BIGBET COINS
 ====================== */
 const saldoBox = document.getElementById("saldo-box");
 const logoutBtn = document.getElementById("logout-btn");
@@ -107,7 +135,8 @@ onAuthStateChanged(auth, async (user) => {
     if (saldoBox) saldoBox.classList.add("hidden");
     if (logoutBtn) logoutBtn.classList.add("hidden");
     if (perfilSection) perfilSection.classList.add("hidden");
-    if (loginAlert) loginAlert.classList.remove("hidden");
+    if (loginSection) loginSection.classList.add("hidden");
+    if (window.location.hash === "#perfil") window.location.hash = "#login";
     return;
   }
 
@@ -120,7 +149,6 @@ onAuthStateChanged(auth, async (user) => {
   if (saldoBox) saldoBox.classList.remove("hidden");
   if (logoutBtn) logoutBtn.classList.remove("hidden");
   if (perfilSection) perfilSection.classList.remove("hidden");
-  if (loginAlert) loginAlert.classList.add("hidden");
 
   window.saldoAtual = data.saldo;
   document.getElementById("saldo").textContent = data.saldo.toFixed(2);
@@ -214,9 +242,6 @@ function spinSlot() {
   else if (slot1===slot2 || slot2===slot3 || slot1===slot3) ganho=100;
   else ganho=-50;
 
-  if (ganho>0) alert(`🎉 Ganhou ${ganho} moedas!`);
-  else alert(`😢 Perdeu ${-ganho} moedas.`);
-
   apostar(ganho);
 }
 
@@ -233,7 +258,7 @@ function rollDice() {
   if (display) display.textContent = `${dado1} 🎲 ${dado2}`;
 
   let ganho = 0;
-  if (dado1+dado2 === 12) ganho=200;
+  if (dado1+dado2===12) ganho=200;
   else if (dado1===dado2) ganho=100;
   else ganho=-20;
 
