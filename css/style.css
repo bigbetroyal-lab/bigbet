@@ -1,42 +1,10 @@
-/* ===== RESET ===== */
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-body { background:#0b0b0f; color:#fff; }
+/* Exemplo de hover glow para moedas e botões */
+button:hover {
+  box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+}
 
-/* ===== TOPBAR ===== */
-.topbar { height:64px; background:#0b0f1a; display:flex; align-items:center; justify-content:space-between; padding:0 20px; border-bottom:1px solid #1c2333; }
-.logo-img { height:36px; }
-.logo-text { font-size:18px; font-weight:bold; color:#ffd700; }
-.top-menu a { margin:0 12px; color:#cfd8dc; text-decoration:none; font-weight:500; }
-.top-menu a:hover { color:#ffd700; }
-.top-right { display:flex; align-items:center; gap:15px; }
-.balance { background:#12192c; padding:6px 12px; border-radius:8px; font-weight:bold; color:#00e676; }
-.btn-login { background:linear-gradient(45deg,#ffd700,#ffb300); border:none; padding:8px 14px; border-radius:8px; font-weight:bold; cursor:pointer; }
-.btn-login:hover { opacity:0.9; }
-
-/* ===== LAYOUT ===== */
-.layout { display:flex; height:calc(100vh - 64px); }
-.sidebar { width:220px; background:#12121a; padding:10px; display:flex; flex-direction:column; align-items:center; }
-.sidebar-menu button { width:100%; background:none; border:none; color:#fff; padding:15px; text-align:left; cursor:pointer; margin-top:5px; }
-.sidebar-menu button:hover { background:#1f1f2f; }
-.sidebar-logo-img { width:50px; margin-bottom:10px; }
-.sidebar-logo-text { color:#ffd700; font-weight:bold; }
-
-/* ===== PÁGINAS ===== */
-.page { display:none; }
-.page.active { display:block; }
-
-/* ===== GAMES GRID ===== */
-.games-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:15px; }
-.game-card { background:#1a1a25; border-radius:10px; overflow:hidden; cursor:pointer; transition:.2s; }
-.game-card:hover { transform:scale(1.05); }
-.game-card img { width:100%; height:120px; object-fit:cover; }
-.game-card span { display:block; padding:10px; text-align:center; }
-
-/* ===== SLOT MACHINE ===== */
-#slot-machine-adv { text-align:center; margin-top:20px; }
-.reels-container { display:flex; justify-content:center; gap:10px; height:180px; overflow:hidden; }
-.reel { display:flex; flex-direction:column; justify-content:flex-start; align-items:center; width:60px; height:180px; border:2px solid #333; border-radius:8px; background:#1a1a25; }
-.symbol { width:60px; height:60px; object-fit:contain; }
-.slot-controls { margin-top:10px; }
-#slot-spin-adv { background:#ffd700; color:#000; border:none; padding:8px 15px; margin-left:10px; font-weight:bold; border-radius:6px; cursor:pointer; }
-#slot-spin-adv:hover { opacity:0.9; }
+/* Fonte monoespace para saldo */
+#saldo {
+  font-weight: bold;
+  color: #ffd700;
+}
