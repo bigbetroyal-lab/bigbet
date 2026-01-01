@@ -1,101 +1,138 @@
-let saldo = 1000;
-const saldoEl = document.getElementById('saldo');
+// js/main.js
+import { auth, db } from "./firebase.js";
 
-// POPUP
-function showPopup(msg) {
-  document.getElementById('popup-msg').textContent = msg;
-  document.getElementById('popup').classList.remove('hidden');
-}
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
-function closePopup() {
-  document.getElementById('popup').classList.add('hidden');
-}
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-// Atualizar saldo
-function updateSaldo(value) {
-  saldo += value;
-  saldoEl.textContent = saldo;
-}
+/* ======================
+   MENU LATERAL (MOBILE)
+====================== */
+const menuBtn = document.getElementById("menu-btn");
+const sidebar = document.getElementById("sidebar");
 
-// SLOT MACHINE
-function spinSlot() {
-  const emojis = ['🍒', '🍋', '🍊', '💎', '7️⃣'];
-  let result = [];
-  for (let i = 0; i < 3; i++) {
-    result.push(emojis[Math.floor(Math.random() * emojis.length)]);
-  }
-  document.getElementById('slot-display').textContent = result.join('');
-  if (new Set(result).size === 1) {
-    updateSaldo(100);
-    showPopup(`Parabéns! Você ganhou 100 🪙`);
-  } else {
-    updateSaldo(-10);
-  }
-}
-
-// DICE
-function rollDice() {
-  const diceFaces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-  const roll = diceFaces[Math.floor(Math.random() * diceFaces.length)];
-  document.getElementById('dice-display').textContent = roll;
-  if (roll === '⚅') {
-    updateSaldo(50);
-    showPopup('Você ganhou 50 🪙');
-  } else {
-    updateSaldo(-5);
-  }
-}
-
-// ROULETTE
-function spinRoulette() {
-  const numbers = Array.from({length: 36}, (_, i) => i + 1);
-  const roll = numbers[Math.floor(Math.random() * numbers.length)];
-  document.getElementById('roulette-display').textContent = roll;
-  if (roll === 7 || roll === 21) {
-    updateSaldo(200);
-    showPopup('Parabéns! Você ganhou 200 🪙');
-  } else {
-    updateSaldo(-20);
-  }
-}
-
-// MENU LATERAL TOGGLE
-const menuBtn = document.getElementById('menu-btn');
-const sidebar = document.getElementById('sidebar');
-
-menuBtn.addEventListener('click', () => {
-  sidebar.classList.toggle('-translate-x-64');
-});
-
-// Preencher data de criação da conta automaticamente
-const dataCriacaoInput = document.getElementById('data_criacao');
-const today = new Date();
-dataCriacaoInput.value = today.toLocaleDateString('pt-PT');
-
-// Captura do formulário
-const registroForm = document.getElementById('registro-form');
-
-registroForm.addEventListener('submit', (e) => {
-  e.preventDefault(); // Evita reload da página
-
-  // Pega os valores
-  const usuario = registroForm.username.value;
-  const nome = registroForm.nome.value;
-  const apelido = registroForm.apelido.value;
-  const genero = registroForm.genero.value;
-  const dataNascimento = registroForm.data_nascimento.value;
-  const email = registroForm.email.value;
-  const telemovel = registroForm.telemovel.value;
-  const dataCriacao = registroForm.data_criacao.value;
-
-  // Aqui você poderia salvar em Firebase ou localStorage
-  console.log({
-    usuario, nome, apelido, genero, dataNascimento, email, telemovel, dataCriacao
+if (menuBtn) {
+  menuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("-translate-x-64");
   });
+}
 
-  alert(`Conta criada com sucesso!\nBem-vindo(a), ${usuario}!`);
+/* ======================
+   REGISTO
+====================== */
+const registroForm = document.getElementById("registro-form");
 
-  registroForm.reset();
-  dataCriacaoInput.value = today.toLocaleDateString('pt-PT');
+if (registroForm) {
+  registroForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const nome = document.getElementById("nome").value;
+    const apelido = document.getElementById("apelido").value;
+    const genero = document.getElementById("genero").value;
+    const data_nascimento = document.getElementById("data_nascimento").value;
+    const email = document.getElementById("email").value;
+    const telemovel = document.getElementById("telemovel").value;
+    const senha = document.getElementById("senha").value;
+    const data_criacao = new Date().toISOString();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "usuarios", user.uid), {
+        username,
+        nome,
+        apelido,
+        genero,
+        data_nascimento,
+        email,
+        telemovel,
+        data_criacao
+      });
+
+      alert("Conta criada com sucesso!");
+      registroForm.reset();
+      window.location.hash = "#perfil";
+
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+}
+
+/* ======================
+   LOGIN
+====================== */
+const loginForm = document.getElementById("login-form");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const senha = document.getElementById("login-senha").value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+      window.location.hash = "#perfil";
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+}
+
+/* ======================
+   PERFIL (CARREGAR DADOS)
+====================== */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+
+  const snap = await getDoc(doc(db, "usuarios", user.uid));
+  if (!snap.exists()) return;
+
+  const d = snap.data();
+
+  if (document.getElementById("perfil-username")) {
+    document.getElementById("perfil-username").value = d.username;
+    document.getElementById("perfil-nome").value = d.nome;
+    document.getElementById("perfil-apelido").value = d.apelido;
+    document.getElementById("perfil-genero").value = d.genero;
+    document.getElementById("perfil-nascimento").value = d.data_nascimento;
+    document.getElementById("perfil-email").value = d.email;
+    document.getElementById("perfil-telemovel").value = d.telemovel;
+    document.getElementById("perfil-criacao").value =
+      new Date(d.data_criacao).toLocaleDateString("pt-PT");
+  }
 });
 
+/* ======================
+   EDITAR PERFIL (LIMITADO)
+====================== */
+const perfilForm = document.getElementById("perfil-form");
+
+if (perfilForm) {
+  perfilForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    await updateDoc(doc(db, "usuarios", user.uid), {
+      email: document.getElementById("perfil-email").value,
+      telemovel: document.getElementById("perfil-telemovel").value
+    });
+
+    alert("Perfil atualizado com sucesso!");
+  });
+}
