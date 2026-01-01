@@ -58,8 +58,10 @@ if (registroForm) {
         data_nascimento,
         email,
         telemovel,
-        data_criacao
+        data_criacao,
+        saldo: 1000   // 🎁 saldo inicial
       });
+
 
       alert("Conta criada com sucesso!");
       registroForm.reset();
