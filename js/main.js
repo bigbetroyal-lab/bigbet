@@ -1,4 +1,3 @@
-// js/main.js
 import { auth, db } from "./firebase.js";
 
 import {
@@ -23,32 +22,40 @@ const sidebar = document.getElementById("sidebar");
 if (menuBtn) menuBtn.addEventListener("click", () => sidebar.classList.toggle("-translate-x-64"));
 
 /* ======================
+   SEÇÕES & BOTÕES
+====================== */
+const btnLogin = document.getElementById("btn-login");
+const btnRegistro = document.getElementById("btn-registro");
+const perfilSection = document.getElementById("perfil");
+const jogosSection = document.getElementById("jogos");
+const loginSection = document.getElementById("login");
+const loginAlert = document.getElementById("login-alert");
+const saldoBox = document.getElementById("saldo-box");
+const logoutBtn = document.getElementById("logout-btn");
+const bbcoinSpan = document.getElementById("bbcoin-count");
+
+/* ======================
    BOTÕES LOGIN / REGISTRO
 ====================== */
-const loginSection = document.getElementById("login"); // nova seção de login
-
-// Mostrar seção de login
 if (btnLogin) {
   btnLogin.addEventListener("click", () => {
     window.location.hash = "#login";
-    loginSection.classList.remove("hidden");  // mostrar login
+    loginSection.classList.remove("hidden");
     perfilSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
 }
 
-// Mostrar seção de registro
 if (btnRegistro) {
   btnRegistro.addEventListener("click", () => {
     window.location.hash = "#perfil";
-    perfilSection.classList.remove("hidden");  // mostrar registro/perfil
+    perfilSection.classList.remove("hidden");
     loginSection.classList.add("hidden");
     jogosSection.classList.add("hidden");
     loginAlert.classList.add("hidden");
   });
 }
-
 
 /* ======================
    REGISTO
@@ -88,6 +95,10 @@ if (registroForm) {
       alert("Conta criada com sucesso!");
       registroForm.reset();
       window.location.hash = "#perfil";
+      perfilSection.classList.remove("hidden");
+      loginSection.classList.add("hidden");
+      jogosSection.classList.remove("hidden");
+      loginAlert.classList.add("hidden");
 
     } catch (error) {
       alert(error.message);
@@ -122,10 +133,6 @@ if (loginForm) {
 /* ======================
    PERFIL / SALDO / BIGBET COINS
 ====================== */
-const saldoBox = document.getElementById("saldo-box");
-const logoutBtn = document.getElementById("logout-btn");
-const bbcoinSpan = document.getElementById("bbcoin-count");
-
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     if (jogosSection) jogosSection.classList.add("hidden");
