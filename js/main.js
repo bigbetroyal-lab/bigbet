@@ -100,23 +100,23 @@ if (loginForm) {
 onAuthStateChanged(auth, async (user) => {
   if (!user) return;
 
-  const snap = await getDoc(doc(db, "usuarios", user.uid));
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+
   if (!snap.exists()) return;
 
-  const d = snap.data();
+  const data = snap.data();
 
-  if (document.getElementById("perfil-username")) {
-    document.getElementById("perfil-username").value = d.username;
-    document.getElementById("perfil-nome").value = d.nome;
-    document.getElementById("perfil-apelido").value = d.apelido;
-    document.getElementById("perfil-genero").value = d.genero;
-    document.getElementById("perfil-nascimento").value = d.data_nascimento;
-    document.getElementById("perfil-email").value = d.email;
-    document.getElementById("perfil-telemovel").value = d.telemovel;
-    document.getElementById("perfil-criacao").value =
-      new Date(d.data_criacao).toLocaleDateString("pt-PT");
+  // Mostrar saldo
+  const saldoSpan = document.getElementById("saldo");
+  if (saldoSpan) {
+    saldoSpan.textContent = data.saldo.toFixed(2);
   }
+
+  // Guardar saldo local
+  window.saldoAtual = data.saldo;
 });
+
 
 /* ======================
    EDITAR PERFIL (LIMITADO)
