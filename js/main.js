@@ -62,7 +62,6 @@ if (registroForm) {
         saldo: 1000   // 🎁 saldo inicial
       });
 
-
       alert("Conta criada com sucesso!");
       registroForm.reset();
       window.location.hash = "#perfil";
@@ -117,7 +116,6 @@ onAuthStateChanged(auth, async (user) => {
   window.saldoAtual = data.saldo;
 });
 
-
 /* ======================
    EDITAR PERFIL (LIMITADO)
 ====================== */
@@ -142,7 +140,6 @@ if (perfilForm) {
 /* ======================
    SEGURANÇA - BLOQUEIO
 ====================== */
-
 const jogosSection = document.getElementById("jogos");
 const saldoBox = document.getElementById("saldo-box");
 const logoutBtn = document.getElementById("logout-btn");
@@ -188,7 +185,6 @@ if (logoutBtn) {
 /* ======================
    SALDO - ATUALIZAÇÃO
 ====================== */
-
 async function atualizarSaldo(valor) {
   const user = auth.currentUser;
   if (!user) return;
@@ -207,4 +203,99 @@ async function atualizarSaldo(valor) {
   document.getElementById("saldo").textContent = saldo.toFixed(2);
 }
 
+/* ======================
+   FUNÇÃO DE APOSTA
+====================== */
+async function apostar(valor) {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("❌ Tens de estar logado para jogar");
+    return;
+  }
 
+  if (window.saldoAtual <= 0) {
+    alert("❌ Saldo esgotado! Faz depósito ou espera por bónus.");
+    return;
+  }
+
+  if (window.saldoAtual + valor < 0) {
+    alert("⚠️ Saldo insuficiente!");
+    return;
+  }
+
+  await atualizarSaldo(valor);
+}
+
+/* ======================
+   SLOT MACHINE
+====================== */
+function spinSlot() {
+  if (!auth.currentUser) {
+    alert("❌ Tens de estar logado para jogar");
+    return;
+  }
+
+  const resultados = ["🎰", "🍒", "🍋", "🔔", "💎"];
+  const slot1 = resultados[Math.floor(Math.random() * resultados.length)];
+  const slot2 = resultados[Math.floor(Math.random() * resultados.length)];
+  const slot3 = resultados[Math.floor(Math.random() * resultados.length)];
+
+  const display = document.getElementById("slot-display");
+  if (display) display.textContent = slot1 + slot2 + slot3;
+
+  let ganho = 0;
+  if (slot1 === slot2 && slot2 === slot3) {
+    ganho = 500;
+    alert("🎉 Trinca! Ganhou 500 moedas!");
+  } else if (slot1 === slot2 || slot2 === slot3 || slot1 === slot3) {
+    ganho = 100;
+    alert("😊 Dois iguais! Ganhou 100 moedas!");
+  } else {
+    ganho = -50;
+    alert("😢 Não combinou. Perdeu 50 moedas.");
+  }
+
+  apostar(ganho);
+}
+
+/* ======================
+   DICE GAME
+====================== */
+function rollDice() {
+  if (!auth.currentUser) {
+    alert("❌ Tens de estar logado para jogar");
+    return;
+  }
+
+  const dado1 = Math.floor(Math.random() * 6) + 1;
+  const dado2 = Math.floor(Math.random() * 6) + 1;
+
+  const display = document.getElementById("dice-display");
+  if (display) display.textContent = `${dado1} 🎲 ${dado2}`;
+
+  let ganho = 0;
+  if (dado1 + dado2 === 12) ganho = 200;
+  else if (dado1 === dado2) ganho = 100;
+  else ganho = -20;
+
+  apostar(ganho);
+}
+
+/* ======================
+   ROULETTE
+====================== */
+function spinRoulette() {
+  if (!auth.currentUser) {
+    alert("❌ Tens de estar logado para jogar");
+    return;
+  }
+
+  const numeros = Array.from({ length: 36 }, (_, i) => i + 1);
+  const resultado = numeros[Math.floor(Math.random() * numeros.length)];
+
+  const display = document.getElementById("roulette-display");
+  if (display) display.textContent = resultado + " 🎡";
+
+  let ganho = resultado % 2 === 0 ? 100 : -50;
+  apostar(ganho);
+}
